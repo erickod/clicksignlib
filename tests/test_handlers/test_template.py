@@ -1,3 +1,4 @@
+import requests
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import Template
 
@@ -15,3 +16,4 @@ def test_Template_instantiation_parmas() -> None:
 
     assert sut._access_token == access_token
     assert sut._environment == env
+    assert sut._requests == requests
