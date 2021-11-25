@@ -1,3 +1,3 @@
-from . import environments
+from . import environments, mixins
 
 __version__ = "0.1.0"
