@@ -11,3 +11,7 @@ def test_EnviromentABC_exists_in_environments_package() -> None:
 
 def test_TestEnviroment_exists_in_environments_package() -> None:
     assert hasattr(clicksignlib.environments, "TestEnvironment")
+
+
+def test_ProductionEnvironment_exists_in_environments_package() -> None:
+    assert hasattr(clicksignlib.environments, "ProductionEnvironment")
