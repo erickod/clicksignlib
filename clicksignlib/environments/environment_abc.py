@@ -1,6 +1,6 @@
 from abc import ABC
 
 
-class EnviromentABC(ABC):
+class EnvironmentABC(ABC):
     title: str
     endpoint: str

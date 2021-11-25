@@ -1,5 +1,5 @@
-from .environment_abc import EnviromentABC
+from .environment_abc import EnvironmentABC
 
 
-class TestEnviroment(EnviromentABC):
+class TestEnvironment(EnvironmentABC):
     pass
