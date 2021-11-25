@@ -1,10 +1,10 @@
 from .environment_abc import EnvironmentABC
 
 
-class TestEnvironment(EnvironmentABC):
+class SandboxEnvironment(EnvironmentABC):
     def __init__(
         self,
-        title: str = "Test Environment",
+        title: str = "Sandbox Environment",
         endpoint: str = "https://sandbox.clicksign.com",
     ) -> None:
         super().__init__(title, endpoint)
