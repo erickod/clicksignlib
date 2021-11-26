@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import requests
 from clicksignlib.environments.protocols import IEnvironment
 
@@ -15,6 +17,12 @@ class Template:
         self._environment = environment
         self._content: bytes = b""
         self._status_code: int = 0
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "template[content]": self._content,
+            "template[name]": self._name,
+        }
 
     def from_bytes(self, data: bytes) -> None:
         self._content = data
