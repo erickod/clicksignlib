@@ -25,3 +25,11 @@ def test_TemplateHandler_base_endpoint_returns_the_env_endpoint_() -> None:
         access_token=access_token, environment=env, api_version=api_version
     )
     sut.base_endpoint == env.endpoint
+
+
+def test_TemplateHandler_full_endpoint_return() -> None:
+    env = SandboxEnvironment()
+    sut = clicksignlib.handlers.TemplateHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+    sut.full_endpoint == f"{sut.base_endpoint}/{sut._api_version}/templates?access_token={sut._access_token}"
