@@ -42,3 +42,13 @@ def test_Template_from_file_method_calls_from_bytes_method_with_right_params() -
         sut.from_bytes = Mock()
         sut.from_file(target_file)
         sut.from_bytes.assert_called_with(f.read())
+
+
+def test_Template_as_dict_method_return() -> None:
+    env = SandboxEnvironment()
+    sut = Template(name=name, access_token=access_token, environment=env)
+
+    assert sut.as_dict() == {
+        "template[content]": sut._content,
+        "template[name]": sut._name,
+    }
