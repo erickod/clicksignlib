@@ -1,7 +1,5 @@
 from typing import Any, Dict
 
-from clicksignlib.environments.protocols import IEnvironment
-
 
 class Template:
     def __init__(
@@ -12,7 +10,7 @@ class Template:
         self._name = name
         self._content: bytes = b""
         self._status_code: int = 0
-        self._payload = {}
+        self._payload: Dict["str", Any] = {}
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -28,4 +26,4 @@ class Template:
             self.from_bytes(f.read())
 
     def is_valid(self) -> bool:
-        return self._name and self._content
+        return bool(self._name and self._content)

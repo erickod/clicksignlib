@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from unittest.mock import Mock
 
 import clicksignlib
