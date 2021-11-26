@@ -23,3 +23,6 @@ class Document:
     def from_file(self, filename: str) -> None:
         with open(filename, "rb") as f:
             self.from_bytes(filename, f.read())
+
+    def is_valid(self) -> bool:
+        return bool(self._content)
