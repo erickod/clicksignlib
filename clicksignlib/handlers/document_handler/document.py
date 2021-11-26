@@ -3,8 +3,8 @@ from typing import Dict, Union
 
 
 class Document:
-    def __init__(self, *, path: str) -> None:
-        self._path = path
+    def __init__(self) -> None:
+        self._path: str = ""
         self._content: Union[str, bytes] = b""
         self._status_code: int = 0
 

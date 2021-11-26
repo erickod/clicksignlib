@@ -13,13 +13,13 @@ def test_handlers_has_a_Document_class() -> None:
 
 
 def test_Document_instantiaton_params() -> None:
-    sut = Document(path=filename)
+    sut = Document()
     assert not sut._content
     assert sut._status_code == 0
 
 
 def test_Document_from_bytes_method() -> None:
-    sut = Document(path=filename)
+    sut = Document()
     sut.from_bytes(filename, file_bytes)
 
     assert sut._content
@@ -28,7 +28,7 @@ def test_Document_from_bytes_method() -> None:
 
 def test_Document_from_file_method_calls_from_bytes() -> None:
     with open(filename, "rb") as f:
-        sut = Document(path=filename)
+        sut = Document()
         sut.from_bytes = Mock()
         sut.from_file(filename)
 
@@ -36,11 +36,11 @@ def test_Document_from_file_method_calls_from_bytes() -> None:
 
 
 def test_Document_is_valid_method_returns_true_if_everything_goes_well() -> None:
-    sut = Document(path=filename)
+    sut = Document()
     sut._content = file_bytes
     assert sut.is_valid()
 
 
 def test_Document_is_valid_method_returns_false_if_content_is_missing() -> None:
-    sut = Document(path=filename)
+    sut = Document()
     assert not sut.is_valid()
