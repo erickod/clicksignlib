@@ -1,3 +1,5 @@
+from unittest.mock import Mock
+
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import Template
 
@@ -29,3 +31,14 @@ def test_Template_from_bytes_method_is_saving_is_saved_in_content_property() -> 
     sut.from_bytes(data_bytes)
 
     assert sut._content == data_bytes
+
+
+def test_Template_from_file_method_calls_from_bytes_method_with_right_params() -> None:
+    target_file = "test.docx"
+
+    with open("test.docx", "rb") as f:
+        env = SandboxEnvironment()
+        sut = Template(name=name, access_token=access_token, environment=env)
+        sut.from_bytes = Mock()
+        sut.from_file(target_file)
+        sut.from_bytes.assert_called_with(f.read())
