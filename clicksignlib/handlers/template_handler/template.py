@@ -8,10 +8,8 @@ class Template:
         self,
         *,
         name: str,
-        environment: IEnvironment,
     ) -> None:
         self._name = name
-        self._environment = environment
         self._content: bytes = b""
         self._status_code: int = 0
         self._payload = {}
