@@ -15,3 +15,16 @@ class DocumentHandler:
         self._environment = environment
         self._requests = requests_adapter
         self._api_version = api_version
+
+    @property
+    def base_endpoint(self) -> str:
+        return self._environment.endpoint
+
+    @property
+    def full_endpoint(self) -> str:
+        endpoint = f"{self.base_endpoint}{self._api_version}"
+        endpoint = (
+            f"{endpoint}/templates/{'{}'}/documents?access_token={self._access_token}"
+        )
+
+        return endpoint
