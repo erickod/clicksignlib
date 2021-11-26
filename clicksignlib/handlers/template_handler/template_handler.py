@@ -1,3 +1,5 @@
+from typing import Any
+
 import requests
 from clicksignlib.environments.protocols import IEnvironment
 
@@ -25,3 +27,10 @@ class TemplateHandler:
         endpoint = f"{self.base_endpoint}{self._api_version}"
         endpoint = f"{endpoint}/templates?access_token={self._access_token}"
         return endpoint
+
+    def create(self, template) -> Any:
+        data = template.as_dict()
+        response = self._requests.post(url=self.full_endpoint, files=data)
+        template._status_code = response.status_code
+        template._payload = response.json()
+        return template

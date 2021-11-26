@@ -16,6 +16,7 @@ class Template:
         self._environment = environment
         self._content: bytes = b""
         self._status_code: int = 0
+        self._payload = {}
 
     def as_dict(self) -> Dict[str, Any]:
         return {
