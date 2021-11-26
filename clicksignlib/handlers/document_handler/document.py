@@ -19,3 +19,7 @@ class Document:
         if decode:
             file_bytes64 = raw_bytes.decode(decode)
         self._content = f"{header_dict[file_extension]}{file_bytes64}"
+
+    def from_file(self, filename: str) -> None:
+        with open(filename, "rb") as f:
+            self.from_bytes(filename, f.read())
