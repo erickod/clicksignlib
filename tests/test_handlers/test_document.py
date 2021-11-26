@@ -27,6 +27,14 @@ def test_Document_from_bytes_method() -> None:
     assert type(sut._content) is str
 
 
+def test_Document_from_dict_method() -> None:
+    data = {}
+    sut = Document()
+    sut.from_dict(filename, data)
+
+    assert type(sut._content) is dict
+
+
 def test_Document_from_file_method_calls_from_bytes() -> None:
     with open(filename, "rb") as f:
         sut = Document()

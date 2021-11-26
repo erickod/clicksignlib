@@ -1,12 +1,12 @@
 import base64
 from pathlib import Path
-from typing import Dict, Union
+from typing import Any, Dict, Union
 
 
 class Document:
     def __init__(self) -> None:
         self._path: str = ""
-        self._content: Union[str, bytes] = b""
+        self._content: Union[str, bytes, Dict[str, Any]] = b""
         self._status_code: int = 0
 
     def from_bytes(self, file_path: str, data: bytes, decode="utf-8") -> None:
@@ -22,6 +22,10 @@ class Document:
         if decode:
             file_bytes64 = raw_bytes.decode(decode)
         self._content = f"{header_dict[file_extension]}{file_bytes64}"
+
+    def from_dict(self, file_path: str, data: Dict[str, Any]) -> None:
+        self._path = file_path
+        self._content = data
 
     def from_file(self, file_path: str) -> None:
         with open(file_path, "rb") as f:
