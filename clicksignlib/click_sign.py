@@ -1,7 +1,7 @@
 import requests
 
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers import TemplateHandler
+from clicksignlib.handlers import DocumentHandler, TemplateHandler
 
 
 class ClickSign:
@@ -15,6 +15,15 @@ class ClickSign:
         self._access_token = access_token
         self._environment = environment
         self._requests_adapter = requests_adapter
+
+    @property
+    def document(self) -> DocumentHandler:
+        return DocumentHandler(
+            access_token=self._access_token,
+            environment=self._environment,
+            requests_adapter=self._requests_adapter,
+            api_version="/api/v2",
+        )
 
     @property
     def template(self) -> TemplateHandler:
