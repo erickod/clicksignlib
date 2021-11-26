@@ -89,3 +89,17 @@ def test_TemplateHandler_create_return() -> None:
     template = sut.create(template)
     assert template._status_code == response.status_code
     assert template._payload == response.json()
+
+
+def test_TemplateHandler_list_method_calls_adapter_get() -> None:
+    request = Mock()
+    request.get.json.return_value = {"key": "value"}
+    env = SandboxEnvironment()
+    sut = clicksignlib.handlers.TemplateHandler(
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=request,
+    )
+    sut.list()
+    request.get.assert_called_with(sut.full_endpoint)
