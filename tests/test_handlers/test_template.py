@@ -57,5 +57,20 @@ def test_Template_as_dict_method_return() -> None:
 def test_Template_is_valid_method_return_true_when_everything_goes_well() -> None:
     env = SandboxEnvironment()
     sut = Template(name=name, access_token=access_token, environment=env)
+    sut.from_bytes(data_bytes)
 
     assert sut.is_valid()
+
+
+def test_Template_is_valid_method_return_false_when_name_is_invalid() -> None:
+    env = SandboxEnvironment()
+    sut = Template(name="", access_token=access_token, environment=env)
+
+    assert not sut.is_valid()
+
+
+def test_Template_is_valid_method_return_false_when_content_is_invalid() -> None:
+    env = SandboxEnvironment()
+    sut = Template(name=name, access_token=access_token, environment=env)
+
+    assert not sut.is_valid()

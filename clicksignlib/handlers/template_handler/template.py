@@ -31,4 +31,4 @@ class Template:
             self.from_bytes(f.read())
 
     def is_valid(self) -> bool:
-        return True
+        return self._name and self._content
