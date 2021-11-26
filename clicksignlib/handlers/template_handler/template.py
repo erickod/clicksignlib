@@ -18,3 +18,7 @@ class Template:
 
     def from_bytes(self, data: bytes) -> None:
         self._content = data
+
+    def from_file(self, file_path: str) -> None:
+        with open(file_path, "rb") as f:
+            self.from_bytes(f.read())
