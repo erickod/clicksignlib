@@ -34,3 +34,6 @@ class TemplateHandler:
         template._status_code = response.status_code
         template._payload = response.json()
         return template
+
+    def list(self) -> Any:
+        return self._requests.get(self.full_endpoint).json()
