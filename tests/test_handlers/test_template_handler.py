@@ -65,7 +65,10 @@ def test_TemplateHandler_create_calls_post_from_request_adapter() -> None:
         requests_adapter=request,
     )
     sut.create(template)
-    request.post.assert_called_with(url=sut.full_endpoint, files=template.as_dict())
+    request.post.assert_called_with(
+        url=sut.full_endpoint,
+        files=template.as_dict(),
+    )
 
 
 def test_TemplateHandler_create_return() -> None:

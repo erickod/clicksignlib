@@ -20,14 +20,14 @@ def test_Template_instantiation_params() -> None:
     assert sut._status_code == 0
 
 
-def test_Template_from_bytes_method_is_saving_is_saved_in_content_property() -> None:
+def test_Template_from_bytes_is_saved_in_content_property() -> None:
     sut = Template(name=name)
     sut.from_bytes(data_bytes)
 
     assert sut._content == data_bytes
 
 
-def test_Template_from_file_method_calls_from_bytes_method_with_right_params() -> None:
+def test_Template_from_file_calls_from_bytes_with_right_params() -> None:
     target_file = "test.docx"
 
     with open("test.docx", "rb") as f:
@@ -46,20 +46,20 @@ def test_Template_as_dict_method_return() -> None:
     }
 
 
-def test_Template_is_valid_method_return_true_when_everything_goes_well() -> None:
+def test_Template_is_valid_return_true_when_everything_goes_well() -> None:
     sut = Template(name=name)
     sut.from_bytes(data_bytes)
 
     assert sut.is_valid()
 
 
-def test_Template_is_valid_method_return_false_when_name_is_invalid() -> None:
+def test_Template_is_valid_return_false_when_name_is_invalid() -> None:
     sut = Template(name=name)
 
     assert not sut.is_valid()
 
 
-def test_Template_is_valid_method_return_false_when_content_is_invalid() -> None:
+def test_Template_is_valid_return_false_when_content_is_invalid() -> None:
     sut = Template(name=name)
 
     assert not sut.is_valid()
