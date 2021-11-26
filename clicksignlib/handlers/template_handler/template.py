@@ -14,3 +14,4 @@ class Template:
         self._access_token = access_token
         self._environment = environment
         self._content: bytes = b""
+        self._status_code: int = 0

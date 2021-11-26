@@ -19,3 +19,4 @@ def test_Template_instantiation_params() -> None:
     assert sut._content == b""
     assert sut._access_token == access_token
     assert sut._environment == env
+    assert sut._status_code == 0
