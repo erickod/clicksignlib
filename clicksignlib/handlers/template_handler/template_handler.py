@@ -19,3 +19,9 @@ class TemplateHandler:
     @property
     def base_endpoint(self) -> str:
         return self._environment.endpoint
+
+    @property
+    def full_endpoint(self) -> str:
+        endpoint = f"{self.base_endpoint}{self._api_version}"
+        endpoint = f"{endpoint}/templates?access_token={self._access_token}"
+        return endpoint
