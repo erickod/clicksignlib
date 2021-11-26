@@ -15,3 +15,6 @@ class Template:
         self._environment = environment
         self._content: bytes = b""
         self._status_code: int = 0
+
+    def from_bytes(self, data: bytes) -> None:
+        self._content = data
