@@ -15,21 +15,17 @@ class ClickSign:
         self._access_token = access_token
         self._environment = environment
         self._requests_adapter = requests_adapter
+        self._config = dict(
+            access_token=self._access_token,
+            environment=self._environment,
+            requests_adapter=self._requests_adapter,
+            api_version="/api/v2",
+        )
 
     @property
     def document(self) -> DocumentHandler:
-        return DocumentHandler(
-            access_token=self._access_token,
-            environment=self._environment,
-            requests_adapter=self._requests_adapter,
-            api_version="/api/v2",
-        )
+        return DocumentHandler(**self._config)
 
     @property
     def template(self) -> TemplateHandler:
-        return TemplateHandler(
-            access_token=self._access_token,
-            environment=self._environment,
-            requests_adapter=self._requests_adapter,
-            api_version="/api/v2",
-        )
+        return TemplateHandler(**self._config)
