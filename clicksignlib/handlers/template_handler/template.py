@@ -1,6 +1,5 @@
 from typing import Any, Dict
 
-import requests
 from clicksignlib.environments.protocols import IEnvironment
 
 
