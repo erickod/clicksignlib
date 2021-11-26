@@ -21,7 +21,7 @@ class Template:
 
     def from_file(self, file_path: str) -> None:
         with open(file_path, "rb") as f:
-            self.from_bytes(f.read())
+            self.from_bytes(file_path, f.read())
 
     def is_valid(self) -> bool:
         if not bool(self.name and self._content):

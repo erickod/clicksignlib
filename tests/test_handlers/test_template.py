@@ -35,7 +35,7 @@ def test_Template_from_file_calls_from_bytes_with_right_params() -> None:
         sut = Template()
         sut.from_bytes = Mock()
         sut.from_file(target_file)
-        sut.from_bytes.assert_called_with(f.read())
+        sut.from_bytes.assert_called_with(target_file, f.read())
 
 
 def test_Template_as_dict_method_return() -> None:
