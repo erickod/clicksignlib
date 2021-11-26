@@ -1,4 +1,5 @@
 import base64
+from pathlib import Path
 from typing import Dict, Union
 
 
@@ -8,9 +9,9 @@ class Document:
         self._content: Union[str, bytes] = b""
         self._status_code: int = 0
 
-    def from_bytes(self, filename: str, data: bytes, decode="utf-8") -> None:
-        filename = filename.lower()
-        file_extension = filename.split(".")[-1]
+    def from_bytes(self, file_path: str, data: bytes, decode="utf-8") -> None:
+        self._path = file_path.lower()
+        file_extension = self._path.split(".")[-1]
         header_dict: Dict[str, str] = {
             "doc": "data:application/msword;base64,",
             "docx": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,",
@@ -22,9 +23,17 @@ class Document:
             file_bytes64 = raw_bytes.decode(decode)
         self._content = f"{header_dict[file_extension]}{file_bytes64}"
 
-    def from_file(self, filename: str) -> None:
-        with open(filename, "rb") as f:
-            self.from_bytes(filename, f.read())
+    def from_file(self, file_path: str) -> None:
+        with open(file_path, "rb") as f:
+            self.from_bytes(file_path, f.read())
 
     def is_valid(self) -> bool:
-        return bool(self._content)
+        if not bool(self.name and self._content):
+            raise ValueError("call from_bytes or from_file before call is_valid")
+        return True
+
+    @property
+    def name(self) -> str:
+        if self._path:
+            return Path(self._path).name
+        return ""

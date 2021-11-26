@@ -1,5 +1,6 @@
 from unittest.mock import Mock
 
+import pytest
 from clicksignlib.handlers import Document
 
 filename = "test.docx"
@@ -37,10 +38,11 @@ def test_Document_from_file_method_calls_from_bytes() -> None:
 
 def test_Document_is_valid_method_returns_true_if_everything_goes_well() -> None:
     sut = Document()
-    sut._content = file_bytes
+    sut.from_file(filename)
     assert sut.is_valid()
 
 
-def test_Document_is_valid_method_returns_false_if_content_is_missing() -> None:
+def test_Document_is_valid_method_raises_if_content_is_missing() -> None:
     sut = Document()
-    assert not sut.is_valid()
+    with pytest.raises(ValueError):
+        sut.is_valid()
