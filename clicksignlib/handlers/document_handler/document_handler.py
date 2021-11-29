@@ -26,8 +26,7 @@ class DocumentHandler:
 
     @property
     def full_endpoint(self) -> str:
-        # endpoint = f"{self.base_endpoint}{self._api_version}"
-        endpoint = f"{self.base_endpoint}/api/v1"
+        endpoint = f"{self.base_endpoint}{self._api_version}"
         endpoint = (
             f"{endpoint}/templates/{'{}'}/documents?access_token={self._access_token}"
         )
