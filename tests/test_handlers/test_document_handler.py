@@ -1,8 +1,13 @@
 import clicksignlib
 from clicksignlib.environments import SandboxEnvironment
+from clicksignlib.handlers import Document
 
 access_token = "any valid token"
 api_version = "/api/v1"
+template_key = "any valid template key"
+valid_template_filename = "test.docx"
+invalid_template_filename = "test.ppt"
+template_data = {"key": "value"}
 env = SandboxEnvironment()
 
 
@@ -32,3 +37,17 @@ def test_DocumentHandler_full_endpoint_return() -> None:
     endpoint = f"{sut.base_endpoint}{sut._api_version}"
     endpoint = f"{endpoint}/templates/{'{}'}/documents?access_token={sut._access_token}"
     assert sut.full_endpoint == endpoint
+
+
+def test_DocumentHandler_create_params_and_returns_a_document() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+    result = sut.create_from_template(
+        document_type="Contratos",
+        filename=valid_template_filename,
+        template_key=template_key,
+        template_data=template_data,
+    )
+
+    assert type(result) is Document
