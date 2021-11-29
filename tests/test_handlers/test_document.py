@@ -54,3 +54,22 @@ def test_Document_is_valid_method_raises_if_content_is_missing() -> None:
     sut = Document()
     with pytest.raises(ValueError):
         sut.is_valid()
+
+
+def test_document_as_dict_method_when_content_dont_match_the_regex() -> None:
+    sut = Document()
+    sut.from_dict("test/testing.docx", {})
+    resulting_dict = sut.as_dict()
+    assert resulting_dict == {
+        "document": {
+            "path": "test/testing.docx",
+            "template": {"data": {}},
+        },
+    }
+
+
+def test_document_as_dict_method_when_content_match_the_regex() -> None:
+    sut = Document()
+    sut._content = "data:"
+    # sut.from_dict("test/testing.docx", {})
+    assert "content_base64" in sut.as_dict()["document"].keys()
