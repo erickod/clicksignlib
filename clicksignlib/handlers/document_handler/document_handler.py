@@ -3,26 +3,25 @@ from typing import Any, Dict
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
+from clicksignlib.handlers import BaseHandler
 from clicksignlib.utils import Payload
 
 
-class DocumentHandler:
+class DocumentHandler(BaseHandler):
     def __init__(
         self,
         *,
         access_token: str,
         environment: IEnvironment,
-        api_version: str = "/api/v1",
+        api_version: str = "/api/v2",
         requests_adapter=requests,
     ) -> None:
-        self._access_token = access_token
-        self._environment = environment
-        self._requests = requests_adapter
-        self._api_version = api_version
-
-    @property
-    def base_endpoint(self) -> str:
-        return self._environment.endpoint
+        super().__init__(
+            access_token=access_token,
+            environment=environment,
+            api_version=api_version,
+            requests_adapter=requests_adapter,
+        )
 
     @property
     def full_endpoint(self) -> str:
