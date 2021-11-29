@@ -42,7 +42,7 @@ class DocumentHandler:
         filename: str,
         template_key: str,
         template_data: Dict[str, Any],
-    ) -> Document:
+    ) -> Payload:
         remote_path = Path("/", document_type, filename)
         request_payload = {
             "document": {
