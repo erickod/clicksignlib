@@ -39,23 +39,8 @@ def test_TemplateHandler_full_endpoint_return() -> None:
     sut.full_endpoint == endpoint
 
 
-def test_TemplateHandler_create_calls_as_dict_from_template() -> None:
-    template = Mock()
-    request = Mock()
-    env = SandboxEnvironment()
-    sut = clicksignlib.handlers.TemplateHandler(
-        access_token=access_token,
-        environment=env,
-        api_version=api_version,
-        requests_adapter=request,
-    )
-    sut.create(template)
-    template.as_dict.assert_called_once()
-
-
 def test_TemplateHandler_create_calls_post_from_request_adapter() -> None:
-    template = Mock()
-    template.as_dict.return_value = {}
+    content = b""
     request = Mock()
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
@@ -64,11 +49,8 @@ def test_TemplateHandler_create_calls_post_from_request_adapter() -> None:
         api_version=api_version,
         requests_adapter=request,
     )
-    sut.create(template)
-    request.post.assert_called_with(
-        url=sut.full_endpoint,
-        files=template.as_dict(),
-    )
+    template = sut.create(name, content)
+    request.post.assert_called_once()
 
 
 def test_TemplateHandler_create_return() -> None:
@@ -86,9 +68,9 @@ def test_TemplateHandler_create_return() -> None:
         api_version=api_version,
         requests_adapter=request,
     )
-    template = sut.create(template)
-    assert template._status_code == response.status_code
-    assert template._payload == response.json()
+    response_payload = sut.create(name, template)
+    assert response_payload.status_code == response.status_code
+    assert response_payload.payload == response.json()
 
 
 def test_TemplateHandler_list_method_calls_adapter_get() -> None:
