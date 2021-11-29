@@ -1,6 +1,7 @@
 import clicksignlib
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import Document
+from clicksignlib.utils import Payload
 
 access_token = "any valid token"
 api_version = "/api/v1"
@@ -39,7 +40,7 @@ def test_DocumentHandler_full_endpoint_return() -> None:
     assert sut.full_endpoint == endpoint
 
 
-def test_DocumentHandler_create_params_and_returns_a_document() -> None:
+def test_DocumentHandler_create_params_and_returns_a_payload() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token, environment=env, api_version=api_version
     )
@@ -50,4 +51,4 @@ def test_DocumentHandler_create_params_and_returns_a_document() -> None:
         template_data=template_data,
     )
 
-    assert type(result) is Document
+    assert type(result) is Payload

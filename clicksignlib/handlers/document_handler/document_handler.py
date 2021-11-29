@@ -3,6 +3,7 @@ from typing import Any, Dict
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
+from clicksignlib.utils import Payload
 
 from .document import Document
 
@@ -43,6 +44,4 @@ class DocumentHandler:
         template_data: Dict[str, Any],
     ) -> Document:
         remote_path = Path("/", document_type, filename)
-        document = Document()
-        document.from_dict(remote_path, template_data)
-        return document
+        return Payload({}, 200)
