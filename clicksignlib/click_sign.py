@@ -19,7 +19,6 @@ class ClickSign:
             access_token=self._access_token,
             environment=self._environment,
             requests_adapter=self._requests_adapter,
-            api_version="/api/v2",
         )
 
     @property
