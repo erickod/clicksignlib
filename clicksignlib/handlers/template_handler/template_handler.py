@@ -39,7 +39,7 @@ class TemplateHandler:
         return Payload(res.json(), res.status_code)
 
     def list(self) -> Payload:
-        res = self._requests.get(self.full_endpoint).json()
+        res = self._requests.get(self.full_endpoint)
         return Payload(res.json(), res.status_code)
 
     def create_from_bytes(self, file_path: str, data: bytes) -> Payload:
