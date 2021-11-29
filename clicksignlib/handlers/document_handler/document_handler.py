@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any, Dict
 
 import requests
@@ -33,5 +34,15 @@ class DocumentHandler:
 
         return endpoint
 
-    def create(self, document: Document) -> Any:
-        print(document)
+    def create_from_template(
+        self,
+        *,
+        document_type: str,
+        filename: str,
+        template_key: str,
+        template_data: Dict[str, Any],
+    ) -> Document:
+        remote_path = Path("/", document_type, filename)
+        document = Document()
+        document.from_dict(remote_path, template_data)
+        return document
