@@ -1,4 +1,5 @@
 import base64
+import re
 from pathlib import Path
 from typing import Any, Dict, Union
 
@@ -25,6 +26,7 @@ class Document:
         self._content = f"{header_dict[file_extension]}{file_bytes64}"
 
     def from_dict(self, file_path: str, data: Dict[str, Any]) -> None:
+        # TODO: validate input dict
         self._path = file_path
         self._content = data
 
@@ -44,15 +46,18 @@ class Document:
         return ""
 
     def as_dict(self) -> Dict[str, Any]:
-        return {
+        data = {
             "document": {
-                "path": "/Documentos/Teste-123.docx",
-                "template": {
-                    "data": {
-                        "nome": "Clicksign Gestão de Documentos S.A.",
-                        "telefone": "R. Teodoro Sampaio 2767, 10° andar",
-                        "dias-semana": "(11) 3145-2570",
-                    }
-                },
-            }
+                "path": f"{self._path}",
+            },
         }
+
+        if not re.match(r"^data:", str(self._content)):
+            data["document"]["template"] = {"data": self._content}
+            return data
+
+        data["document"]["content_base64"] = self._content
+        data["document"]["auto_close"] = True
+        data["document"]["locale"] = "pt-BR"
+        data["document"]["sequence_enabled"] = False
+        return data
