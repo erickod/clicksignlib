@@ -30,7 +30,7 @@ class TemplateHandler:
         endpoint = f"{endpoint}/templates?access_token={self._access_token}"
         return endpoint
 
-    def create(self, name: str, content: bytes) -> Any:
+    def create(self, name: str, content: bytes) -> Payload:
         request_payload = {
             "template[content]": content,
             "template[name]": name,
@@ -38,13 +38,14 @@ class TemplateHandler:
         res = self._requests.post(url=self.full_endpoint, files=request_payload)
         return Payload(res.json(), res.status_code)
 
-    def list(self) -> Any:
-        return self._requests.get(self.full_endpoint).json()
+    def list(self) -> Payload:
+        res = self._requests.get(self.full_endpoint).json()
+        return Payload(res.json(), res.status_code)
 
-    def create_from_bytes(self, file_path: str, data: bytes) -> None:
+    def create_from_bytes(self, file_path: str, data: bytes) -> Payload:
         filename: str = Path(file_path).name
         return self.create(filename, data)
 
-    def create_from_file(self, file_path: str) -> None:
+    def create_from_file(self, file_path: str) -> Payload:
         with open(file_path, "rb") as f:
             return self.create_from_bytes(file_path, f.read())
