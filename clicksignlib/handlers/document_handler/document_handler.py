@@ -3,11 +3,12 @@ from typing import Any, Dict
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers import BaseHandler
+from clicksignlib.handlers import Config
+from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Payload
 
 
-class DocumentHandler(BaseHandler):
+class DocumentHandler(EndpointMixin):
     def __init__(
         self,
         *,
@@ -16,7 +17,7 @@ class DocumentHandler(BaseHandler):
         api_version: str = "/api/v2",
         requests_adapter=requests,
     ) -> None:
-        super().__init__(
+        self.config = Config(
             access_token=access_token,
             environment=environment,
             api_version=api_version,
@@ -25,10 +26,8 @@ class DocumentHandler(BaseHandler):
 
     @property
     def full_endpoint(self) -> str:
-        endpoint = f"{self.base_endpoint}{self._api_version}"
-        endpoint = (
-            f"{endpoint}/templates/{'{}'}/documents?access_token={self._access_token}"
-        )
+        endpoint = f"{self.base_endpoint}{self.config.api_version}"
+        endpoint = f"{endpoint}/templates/{'{}'}/documents?access_token={self.config.access_token}"
 
         return endpoint
 
@@ -47,7 +46,7 @@ class DocumentHandler(BaseHandler):
                 "template": {"data": template_data},
             }
         }
-        res = self._requests.post(
+        res = self.config.requests.post(
             self.full_endpoint.format(template_key), json=request_payload
         )
         response_payload: Dict[str, Any] = self.full_endpoint.format(template_key)

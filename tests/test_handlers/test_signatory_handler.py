@@ -16,17 +16,15 @@ def test_SignatoryHandler_intantiation_params() -> None:
     sut = clicksignlib.handlers.SignatoryHandler(
         access_token=access_token, environment=env
     )
-    assert sut._access_token == access_token
-    assert sut._environment == env
-    assert sut._api_version == api_version
+    assert sut.config.access_token == access_token
+    assert sut.config.environment == env
+    assert sut.config.api_version == api_version
 
 
 def test_SignatoryHandler_create_method() -> None:
     requests = Mock()
     sut = clicksignlib.handlers.SignatoryHandler(
-        access_token=access_token,
-        environment=env,
-        requests_adapter=requests
+        access_token=access_token, environment=env, requests_adapter=requests
     )
     sut.create(
         name="Erick Duarte",

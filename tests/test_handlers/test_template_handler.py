@@ -17,8 +17,8 @@ def test_ensure_TemplateHandler_intantiation_params() -> None:
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token, environment=env, api_version=api_version
     )
-    assert sut._access_token == access_token
-    assert sut._environment == env
+    assert sut.config.access_token == access_token
+    assert sut.config.environment == env
 
 
 def test_TemplateHandler_base_endpoint_returns_the_env_endpoint() -> None:
@@ -34,8 +34,8 @@ def test_TemplateHandler_full_endpoint_return() -> None:
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token, environment=env, api_version=api_version
     )
-    endpoint = f"{sut.base_endpoint}/{sut._api_version}"
-    endpoint = f"{endpoint}/templates?access_token={sut._access_token}"
+    endpoint = f"{sut.base_endpoint}/{sut.config.api_version}"
+    endpoint = f"{endpoint}/templates?access_token={sut.config.access_token}"
     sut.full_endpoint == endpoint
 
 

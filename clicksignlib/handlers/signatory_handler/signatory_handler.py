@@ -1,10 +1,11 @@
 import requests
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers import BaseHandler
+from clicksignlib.handlers import Config
+from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Payload
 
 
-class SignatoryHandler(BaseHandler):
+class SignatoryHandler(EndpointMixin):
     def __init__(
         self,
         *,
@@ -13,7 +14,7 @@ class SignatoryHandler(BaseHandler):
         api_version: str = "/api/v1",
         requests_adapter=requests,
     ) -> None:
-        super().__init__(
+        self.config = Config(
             access_token=access_token,
             environment=environment,
             api_version=api_version,
@@ -22,8 +23,8 @@ class SignatoryHandler(BaseHandler):
 
     @property
     def full_endpoint(self) -> str:
-        endpoint = f"{self.base_endpoint}{self._api_version}"
-        endpoint = f"{endpoint}/signers?access_token={self._access_token}"
+        endpoint = f"{self.base_endpoint}{self.config.api_version}"
+        endpoint = f"{endpoint}/signers?access_token={self.config.access_token}"
 
         return endpoint
 
@@ -53,5 +54,5 @@ class SignatoryHandler(BaseHandler):
                 "delivery": "email" if notify else None,
             }
         }
-        res = self._requests.post(self.full_endpoint, json=request_payload)
+        res = self.config.requests.post(self.full_endpoint, json=request_payload)
         return Payload(res.json(), res.status_code)

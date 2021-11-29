@@ -2,11 +2,12 @@ from pathlib import Path
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers import BaseHandler
+from clicksignlib.handlers import Config
+from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Payload
 
 
-class TemplateHandler(BaseHandler):
+class TemplateHandler(EndpointMixin):
     def __init__(
         self,
         *,
@@ -15,7 +16,7 @@ class TemplateHandler(BaseHandler):
         api_version: str = "/api/v2",
         requests_adapter=requests,
     ) -> None:
-        super().__init__(
+        self.config = Config(
             access_token=access_token,
             environment=environment,
             api_version=api_version,
@@ -24,8 +25,8 @@ class TemplateHandler(BaseHandler):
 
     @property
     def full_endpoint(self) -> str:
-        endpoint = f"{self.base_endpoint}{self._api_version}"
-        endpoint = f"{endpoint}/templates?access_token={self._access_token}"
+        endpoint = f"{self.base_endpoint}{self.config.api_version}"
+        endpoint = f"{endpoint}/templates?access_token={self.config.access_token}"
         return endpoint
 
     def create(self, name: str, content: bytes) -> Payload:
@@ -33,11 +34,11 @@ class TemplateHandler(BaseHandler):
             "template[content]": content,
             "template[name]": name,
         }
-        res = self._requests.post(url=self.full_endpoint, files=request_payload)
+        res = self.config.requests.post(url=self.full_endpoint, files=request_payload)
         return Payload(res.json(), res.status_code)
 
     def list(self) -> Payload:
-        res = self._requests.get(self.full_endpoint)
+        res = self.config.requests.get(self.full_endpoint)
         return Payload(res.json(), res.status_code)
 
     def create_from_bytes(self, file_path: str, data: bytes) -> Payload:
