@@ -44,4 +44,14 @@ class DocumentHandler:
         template_data: Dict[str, Any],
     ) -> Document:
         remote_path = Path("/", document_type, filename)
-        return Payload({}, 200)
+        request_payload = {
+            "document": {
+                "path": str(remote_path),
+                "template": {"data": template_data},
+            }
+        }
+        res = self._requests.post(
+            self.full_endpoint.format(template_key), json=request_payload
+        )
+        response_payload: Dict[str, Any] = self.full_endpoint.format(template_key)
+        return Payload(response_payload, res.status_code)
