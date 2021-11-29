@@ -40,7 +40,7 @@ def test_DocumentHandler_full_endpoint_return() -> None:
     assert sut.full_endpoint == endpoint
 
 
-def test_DocumentHandler_create_params_and_returns_a_payload() -> None:
+def test_DocumentHandler_create_from_template() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token, environment=env, api_version=api_version
     )
