@@ -1,6 +1,5 @@
 import clicksignlib
 from clicksignlib.environments import SandboxEnvironment
-from clicksignlib.handlers import Document
 from clicksignlib.utils import Payload
 
 access_token = "any valid token"

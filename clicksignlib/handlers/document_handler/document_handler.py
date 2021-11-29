@@ -5,8 +5,6 @@ import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.utils import Payload
 
-from .document import Document
-
 
 class DocumentHandler:
     def __init__(
