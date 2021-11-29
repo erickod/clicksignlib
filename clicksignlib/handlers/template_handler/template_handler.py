@@ -42,9 +42,9 @@ class TemplateHandler:
         return self._requests.get(self.full_endpoint).json()
 
     def create_from_bytes(self, file_path: str, data: bytes) -> None:
-        filename: str = Path(self._path).name
-        self.create(filename, data)
+        filename: str = Path(file_path).name
+        return self.create(filename, data)
 
     def create_from_file(self, file_path: str) -> None:
         with open(file_path, "rb") as f:
-            self.from_bytes(file_path, f.read())
+            return self.create_from_bytes(file_path, f.read())
