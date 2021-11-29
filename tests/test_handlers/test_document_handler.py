@@ -2,7 +2,7 @@ import clicksignlib
 from clicksignlib.environments import SandboxEnvironment
 
 access_token = "any valid token"
-api_version = "/api/v2"
+api_version = "/api/v1"
 env = SandboxEnvironment()
 
 

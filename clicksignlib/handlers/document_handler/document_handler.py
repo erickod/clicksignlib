@@ -1,5 +1,9 @@
+from typing import Any, Dict
+
 import requests
 from clicksignlib.environments.protocols import IEnvironment
+
+from .document import Document
 
 
 class DocumentHandler:
@@ -8,7 +12,7 @@ class DocumentHandler:
         *,
         access_token: str,
         environment: IEnvironment,
-        api_version: str,
+        api_version: str = "/api/v1",
         requests_adapter=requests,
     ) -> None:
         self._access_token = access_token
@@ -22,9 +26,13 @@ class DocumentHandler:
 
     @property
     def full_endpoint(self) -> str:
-        endpoint = f"{self.base_endpoint}{self._api_version}"
+        # endpoint = f"{self.base_endpoint}{self._api_version}"
+        endpoint = f"{self.base_endpoint}/api/v1"
         endpoint = (
             f"{endpoint}/templates/{'{}'}/documents?access_token={self._access_token}"
         )
 
         return endpoint
+
+    def create(self, document: Document) -> Any:
+        print(document)

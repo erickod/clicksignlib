@@ -10,7 +10,7 @@ class TemplateHandler:
         *,
         access_token: str,
         environment: IEnvironment,
-        api_version: str,
+        api_version: str = "/api/v2",
         requests_adapter=requests,
     ) -> None:
         self._access_token = access_token

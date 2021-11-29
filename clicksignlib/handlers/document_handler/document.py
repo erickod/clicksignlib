@@ -8,6 +8,7 @@ class Document:
         self._path: str = ""
         self._content: Union[str, bytes, Dict[str, Any]] = b""
         self._status_code: int = 0
+        self.template_key: str = ""
 
     def from_bytes(self, file_path: str, data: bytes, decode="utf-8") -> None:
         self._path = file_path.lower()
@@ -41,3 +42,17 @@ class Document:
         if self._path:
             return Path(self._path).name
         return ""
+
+    def as_dict(self) -> Dict[str, Any]:
+        return {
+            "document": {
+                "path": "/Documentos/Teste-123.docx",
+                "template": {
+                    "data": {
+                        "nome": "Clicksign Gestão de Documentos S.A.",
+                        "telefone": "R. Teodoro Sampaio 2767, 10° andar",
+                        "dias-semana": "(11) 3145-2570",
+                    }
+                },
+            }
+        }
