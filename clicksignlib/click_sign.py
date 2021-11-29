@@ -1,7 +1,7 @@
 import requests
 
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers import DocumentHandler, TemplateHandler
+from clicksignlib.handlers import DocumentHandler, SignatoryHandler, TemplateHandler
 
 
 class ClickSign:
@@ -28,3 +28,7 @@ class ClickSign:
     @property
     def template(self) -> TemplateHandler:
         return TemplateHandler(**self._config)
+
+    @property
+    def signers(self) -> SignatoryHandler:
+        return SignatoryHandler(**self._config)
