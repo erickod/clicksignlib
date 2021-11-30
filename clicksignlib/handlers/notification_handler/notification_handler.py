@@ -24,3 +24,4 @@ class NotificationHandler(EndpointMixin):
     def full_endpoint(self) -> str:
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
         endpoint = f"{endpoint}/notifications?access_token={self.config.access_token}"
+        return endpoint
