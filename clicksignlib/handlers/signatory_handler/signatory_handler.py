@@ -4,6 +4,8 @@ from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Payload
 
+from .signer_type import SignerType
+
 
 class SignatoryHandler(EndpointMixin):
     def __init__(
@@ -55,4 +57,30 @@ class SignatoryHandler(EndpointMixin):
             }
         }
         res = self.config.requests.post(self.full_endpoint, json=request_payload)
+        return Payload(res.json(), res.status_code)
+
+    def add_signatory_to_document(
+        self,
+        document_key: str,
+        signer_key: str,
+        signer_type: SignerType,
+        message: str,
+        group: int = 0,
+    ) -> Payload:
+        endpoint: str = f"{self.config.environment.endpoint}/api/v1/lists?"
+        endpoint = f"{endpoint}access_token={self.config.access_token}"
+        request_payload = {
+            "list": {
+                "document_key": document_key,
+                "signer_key": signer_key,
+                "sign_as": signer_type.value,
+                "message": message,
+            }
+        }
+
+        if group:
+            request_payload["sequence_enabled"] = True
+            request_payload["group"] = group
+
+        res = self.config.requests.post(endpoint, json=request_payload)
         return Payload(res.json(), res.status_code)
