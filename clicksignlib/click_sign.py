@@ -1,7 +1,12 @@
 import requests
 
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers import DocumentHandler, SignatoryHandler, TemplateHandler
+from clicksignlib.handlers import (
+    DocumentHandler,
+    NotificationHandler,
+    SignatoryHandler,
+    TemplateHandler,
+)
 
 
 class ClickSign:
@@ -32,3 +37,7 @@ class ClickSign:
     @property
     def signers(self) -> SignatoryHandler:
         return SignatoryHandler(**self._config)
+
+    @property
+    def notification(self):
+        return NotificationHandler(**self._config)
