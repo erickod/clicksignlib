@@ -4,6 +4,7 @@ from clicksignlib import ClickSign, __version__
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import (
     DocumentHandler,
+    EmbeddedHandler,
     NotificationHandler,
     SignatoryHandler,
     TemplateHandler,
@@ -68,3 +69,12 @@ def test_clickSign_notification_property() -> None:
         access_token=access_token, environment=env, requests_adapter=requests
     )
     assert isinstance(sut.notification, NotificationHandler)
+
+
+def test_clickSign_widget_property() -> None:
+    requests = Mock()
+
+    sut = ClickSign(
+        access_token=access_token, environment=env, requests_adapter=requests
+    )
+    assert isinstance(sut.widget, EmbeddedHandler)

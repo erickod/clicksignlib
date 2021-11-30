@@ -3,6 +3,7 @@ import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import (
     DocumentHandler,
+    EmbeddedHandler,
     NotificationHandler,
     SignatoryHandler,
     TemplateHandler,
@@ -41,3 +42,7 @@ class ClickSign:
     @property
     def notification(self):
         return NotificationHandler(**self._config)
+
+    @property
+    def widget(self) -> EmbeddedHandler:
+        return EmbeddedHandler(environment=self._config["environment"])
