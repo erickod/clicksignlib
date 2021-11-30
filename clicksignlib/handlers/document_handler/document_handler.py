@@ -49,5 +49,4 @@ class DocumentHandler(EndpointMixin):
         res = self.config.requests.post(
             self.full_endpoint.format(template_key), json=request_payload
         )
-        response_payload: Dict[str, Any] = self.full_endpoint.format(template_key)
-        return Payload(response_payload, res.status_code)
+        return Payload(res.json(), res.status_code)
