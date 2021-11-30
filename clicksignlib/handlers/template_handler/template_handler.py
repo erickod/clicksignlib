@@ -30,11 +30,15 @@ class TemplateHandler(EndpointMixin):
         return endpoint
 
     def create(self, name: str, content: bytes) -> Payload:
-        request_payload = {
-            "template[content]": content,
-            "template[name]": name,
-        }
-        res = self.config.requests.post(url=self.full_endpoint, files=request_payload)
+        res = self.config.requests.post(
+            url=self.full_endpoint,
+            files={
+                "template[content]": content,
+            },
+            data={
+                "template[name]": name,
+            },
+        )
         return Payload(res.json(), res.status_code)
 
     def list(self) -> Payload:
