@@ -2,7 +2,12 @@ from unittest.mock import Mock
 
 from clicksignlib import ClickSign, __version__
 from clicksignlib.environments import SandboxEnvironment
-from clicksignlib.handlers import DocumentHandler, SignatoryHandler, TemplateHandler
+from clicksignlib.handlers import (
+    DocumentHandler,
+    NotificationHandler,
+    SignatoryHandler,
+    TemplateHandler,
+)
 
 access_token = "any valid token"
 env = SandboxEnvironment()
@@ -54,3 +59,12 @@ def test_clickSign_signers_property() -> None:
         access_token=access_token, environment=env, requests_adapter=requests
     )
     assert isinstance(sut.signers, SignatoryHandler)
+
+
+def test_clickSign_notification_property() -> None:
+    requests = Mock()
+
+    sut = ClickSign(
+        access_token=access_token, environment=env, requests_adapter=requests
+    )
+    assert isinstance(sut.notification, NotificationHandler)
