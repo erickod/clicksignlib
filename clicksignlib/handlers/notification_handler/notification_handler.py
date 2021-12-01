@@ -31,8 +31,10 @@ class NotificationHandler(EndpointMixin):
         request_payload = {
             "request_signature_key": request_key,
             "message": message,
-            "url": url,
         }
+        if url:
+            request_payload["url"] = url
+
         res = self.config.requests.post(
             url=self.full_endpoint,
             json=request_payload,
