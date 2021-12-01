@@ -5,7 +5,6 @@ import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
-from clicksignlib.utils import Payload
 
 
 class DocumentHandler(EndpointMixin):
@@ -38,7 +37,7 @@ class DocumentHandler(EndpointMixin):
         filename: str,
         template_key: str,
         template_data: Dict[str, Any],
-    ) -> Payload:
+    ) -> Any:
         remote_path = Path("/", document_type, filename)
         request_payload = {
             "document": {
@@ -46,7 +45,6 @@ class DocumentHandler(EndpointMixin):
                 "template": {"data": template_data},
             }
         }
-        res = self.config.requests.post(
+        return self.config.requests.post(
             self.full_endpoint.format(template_key), json=request_payload
         )
-        return Payload(res.json(), res.status_code)

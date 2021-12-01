@@ -1,6 +1,5 @@
 import clicksignlib
 from clicksignlib.environments import SandboxEnvironment
-from clicksignlib.utils import Payload
 
 access_token = "any valid token"
 api_version = "/api/v1"
@@ -52,4 +51,4 @@ def test_DocumentHandler_create_from_template() -> None:
         template_data=template_data,
     )
 
-    assert type(result) is Payload
+    assert type(result)

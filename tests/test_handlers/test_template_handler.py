@@ -68,9 +68,8 @@ def test_TemplateHandler_create_return() -> None:
         api_version=api_version,
         requests_adapter=request,
     )
-    response_payload = sut.create(name, template)
-    assert response_payload.status_code == response.status_code
-    assert response_payload.payload == response.json()
+    response = sut.create(name, template)
+    assert response.status_code == response.status_code
 
 
 def test_TemplateHandler_list_method_calls_adapter_get() -> None:

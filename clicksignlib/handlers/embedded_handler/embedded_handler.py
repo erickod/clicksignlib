@@ -1,5 +1,4 @@
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.handlers.mixins import EndpointMixin
 
 
 class EmbeddedHandler:
