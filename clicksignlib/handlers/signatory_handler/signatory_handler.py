@@ -4,6 +4,7 @@ import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
+from clicksignlib.utils import Result
 
 from .signer_type import SignerType
 
@@ -57,7 +58,12 @@ class SignatoryHandler(EndpointMixin):
                 "delivery": "email" if notify else None,
             }
         }
-        return self.config.requests.post(self.full_endpoint, json=request_payload)
+        return Result(
+            request_data=request_payload,
+            response_data=self.config.requests.post(
+                self.full_endpoint, json=request_payload
+            ),
+        )
 
     def add_signatory_to_document(
         self,
@@ -82,4 +88,7 @@ class SignatoryHandler(EndpointMixin):
             request_payload["sequence_enabled"] = True
             request_payload["group"] = group
 
-        return self.config.requests.post(endpoint, json=request_payload)
+        return Result(
+            request_data=request_payload,
+            response_data=self.config.requests.post(endpoint, json=request_payload),
+        )
