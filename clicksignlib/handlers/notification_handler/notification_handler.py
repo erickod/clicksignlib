@@ -2,6 +2,7 @@ import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
+from clicksignlib.utils import Result
 
 
 class NotificationHandler(EndpointMixin):
@@ -25,3 +26,6 @@ class NotificationHandler(EndpointMixin):
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
         endpoint = f"{endpoint}/notifications?access_token={self.config.access_token}"
         return endpoint
+
+    def notify_by_email(self, request_key: str, message: str) -> Result:
+        return Result(request_data={}, response_data="")
