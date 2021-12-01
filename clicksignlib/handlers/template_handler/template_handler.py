@@ -5,6 +5,7 @@ import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
+from clicksignlib.utils import Result
 
 
 class TemplateHandler(EndpointMixin):
@@ -29,24 +30,33 @@ class TemplateHandler(EndpointMixin):
         endpoint = f"{endpoint}/templates?access_token={self.config.access_token}"
         return endpoint
 
-    def create(self, name: str, content: bytes) -> Any:
-        return self.config.requests.post(
-            url=self.full_endpoint,
-            files={
+    def create(self, name: str, content: bytes) -> Result:
+        request_payload = {
+            "files": {
                 "template[content]": content,
             },
-            data={
+            "data": {
                 "template[name]": name,
             },
+        }
+        return Result(
+            request_data=request_payload,
+            response_data=self.config.requests.post(
+                url=self.full_endpoint,
+                files=request_payload["files"],
+                data=request_payload["data"],
+            ),
         )
 
-    def list(self) -> Any:
-        return self.config.requests.get(self.full_endpoint)
+    def list(self) -> Result:
+        return Result(
+            request_data={}, response_data=self.config.requests.get(self.full_endpoint)
+        )
 
-    def create_from_bytes(self, file_path: str, data: bytes) -> Any:
+    def create_from_bytes(self, file_path: str, data: bytes) -> Result:
         filename: str = Path(file_path).name
         return self.create(filename, data)
 
-    def create_from_file(self, file_path: str) -> Any:
+    def create_from_file(self, file_path: str) -> Result:
         with open(file_path, "rb") as f:
             return self.create_from_bytes(file_path, f.read())

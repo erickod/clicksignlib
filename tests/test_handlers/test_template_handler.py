@@ -2,6 +2,7 @@ from unittest.mock import Mock
 
 import clicksignlib
 from clicksignlib.environments import SandboxEnvironment
+from clicksignlib.utils.result import Result
 
 name = "any valid template name"
 access_token = "any valid token"
@@ -49,18 +50,14 @@ def test_TemplateHandler_create_calls_post_from_request_adapter() -> None:
         api_version=api_version,
         requests_adapter=request,
     )
-    template = sut.create(name, content)
+    sut.create(name, content)
     request.post.assert_called_once()
 
 
-def test_TemplateHandler_create_return() -> None:
+def test_TemplateHandler_create_return_type() -> None:
     response = Mock()
-    response.status_code = 200
-    response.json.return_value = {"key": "value"}
     template = Mock()
-    template.as_dict.return_value = {}
     request = Mock()
-    request.post.return_value = response
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token,
@@ -69,12 +66,11 @@ def test_TemplateHandler_create_return() -> None:
         requests_adapter=request,
     )
     response = sut.create(name, template)
-    assert response.status_code == response.status_code
+    assert type(response) is Result
 
 
 def test_TemplateHandler_list_method_calls_adapter_get() -> None:
     request = Mock()
-    request.get.json.return_value = {"key": "value"}
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token,
