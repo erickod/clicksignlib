@@ -27,5 +27,5 @@ class NotificationHandler(EndpointMixin):
         endpoint = f"{endpoint}/notifications?access_token={self.config.access_token}"
         return endpoint
 
-    def notify_by_email(self, request_key: str, message: str) -> Result:
+    def notify_by_email(self, request_key: str, message: str, url: str = "") -> Result:
         return Result(request_data={}, response_data="")
