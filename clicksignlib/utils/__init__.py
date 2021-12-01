@@ -1,1 +1,3 @@
-from result import Result
+from .result import Result
+
+__all__ = ["Result"]
