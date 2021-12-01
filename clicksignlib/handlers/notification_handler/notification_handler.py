@@ -28,12 +28,13 @@ class NotificationHandler(EndpointMixin):
         return endpoint
 
     def notify_by_email(self, request_key: str, message: str, url: str = "") -> Result:
-        self.config.requests.post(
+        request_payload = {
+            "request_signature_key": request_key,
+            "message": message,
+            "url": url,
+        }
+        res = self.config.requests.post(
             url=self.full_endpoint,
-            json={
-                "request_signature_key": request_key,
-                "message": message,
-                "url": url,
-            },
+            json=request_payload,
         )
-        return Result(request_data={}, response_data="")
+        return Result(request_data=request_payload, response_data=res)

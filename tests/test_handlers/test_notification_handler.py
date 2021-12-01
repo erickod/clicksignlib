@@ -42,3 +42,18 @@ def test_NotificationHandler_notify_by_email_calls_post_from_request_with_right_
             "url": url,
         },
     )
+
+
+def test_NotificationHandler_notify_by_email_Result_data() -> None:
+    requests = Mock()
+    sut = NotificationHandler(
+        access_token=access_token, environment=env, requests_adapter=requests
+    )
+    result = sut.notify_by_email(
+        request_key=request_signature_key,
+        message=message,
+        url=url,
+    )
+
+    assert result.request_data
+    assert result.response_data
