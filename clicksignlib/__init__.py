@@ -1,4 +1,4 @@
-from . import environments, handlers
+from . import environments, handlers, utils
 from .click_sign import ClickSign
 
 __version__ = "0.1.0"
@@ -7,5 +7,6 @@ __all__ = [
     "environments",
     "handlers",
     "ClickSign",
+    "utils",
     "__version__",
 ]
