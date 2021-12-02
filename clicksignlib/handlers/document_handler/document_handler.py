@@ -1,8 +1,10 @@
+import uuid
 from pathlib import Path
 from typing import Any, Dict
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
+from clicksignlib.errors import InvalidKeyError
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Result
@@ -39,6 +41,11 @@ class DocumentHandler(EndpointMixin):
         template_key: str,
         template_data: Dict[str, Any],
     ) -> Result:
+        try:
+            uuid.UUID(template_key)
+        except ValueError:
+            raise InvalidKeyError(target="template_key")
+
         remote_path = Path("/", document_type, filename)
         request_payload = {
             "document": {

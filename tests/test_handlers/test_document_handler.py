@@ -1,9 +1,13 @@
+import uuid
+
 import clicksignlib
+import pytest
 from clicksignlib.environments import SandboxEnvironment
+from clicksignlib.errors import InvalidKeyError
 
 access_token = "any valid token"
 api_version = "/api/v1"
-template_key = "any valid template key"
+template_key = str(uuid.uuid4())
 valid_template_filename = "test.docx"
 invalid_template_filename = "test.ppt"
 template_data = {"key": "value"}
@@ -52,3 +56,17 @@ def test_DocumentHandler_create_from_template() -> None:
     )
 
     assert type(result)
+
+
+def test_DocumentHandler_raises_when_create_from_template_receives_an_invalid_key() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+
+    with pytest.raises(InvalidKeyError):
+        sut.create_from_template(
+            document_type="Contratos",
+            filename=valid_template_filename,
+            template_key="invalid key",
+            template_data=template_data,
+        )
