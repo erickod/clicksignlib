@@ -12,11 +12,11 @@ from clicksignlib.handlers import (
 
 class ClickSign:
     def __init__(
-        self,
-        *,
-        access_token: str,
-        environment: IEnvironment,
-        requests_adapter=requests,
+            self,
+            *,
+            access_token: str,
+            environment: IEnvironment,
+            requests_adapter=requests,
     ) -> None:
         self._access_token = access_token
         self._environment = environment

@@ -20,7 +20,10 @@ def wait_futures(*futures: Coroutine) -> Union[Future, Coroutine]:
 
 async def wait_future(future: Coroutine) -> Coroutine:
     coro = await future.response_data
-    return await coro.json()
+    if coro.status == 200:
+        return await coro.json()
+
+    raise NotImplementedError
 
 
 def run(*futures: Coroutine) -> Generic[_T]:
