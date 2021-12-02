@@ -1,0 +1,333 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <value>
+          <list size="5">
+            <item index="0" class="java.lang.String" itemvalue="decouple" />
+            <item index="1" class="java.lang.String" itemvalue="Crypto" />
+            <item index="2" class="java.lang.String" itemvalue="beautifulsoup4" />
+            <item index="3" class="java.lang.String" itemvalue="validators" />
+            <item index="4" class="java.lang.String" itemvalue="python-iugu" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="W605" />
+          <option value="E712" />
+          <option value="E303" />
+          <option value="W292" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N813" />
+          <option value="N801" />
+          <option value="N814" />
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyShadowingBuiltinsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredNames">
+        <list>
+          <option value="sum" />
+          <option value="id" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="bool.__setitem__" />
+          <option value="dict.to_voucher" />
+          <option value="company.models.Company._meta" />
+          <option value="django.contrib.postgres.fields.mixins.CheckFieldDefaultMixin.formfield" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_queryset" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.paginate_queryset" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.filter_queryset" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_serializer" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_paginated_response" />
+          <option value="object.get_queryset" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.request" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_queryset_or_cache" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_object" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.obj" />
+          <option value="users.models.Profile.objects" />
+          <option value="django.db.models.fields.related.OneToOneField.first_name" />
+          <option value="django.db.models.fields.related.OneToOneField.last_name" />
+          <option value="django.contrib.auth.models.User.id" />
+          <option value="api_resources.view_custom.validator_data.ValidatorData.request" />
+          <option value="bool.__getitem__" />
+          <option value="list.replace" />
+          <option value="django.db.models.fields.related.ForeignKey.title" />
+          <option value="customfields.models.answer.Answer._meta" />
+          <option value="django.db.models.fields.related.ForeignKey.first_name" />
+          <option value="django.db.models.fields.related.ForeignKey.last_name" />
+          <option value="django.db.models.fields.related.ForeignKey.image" />
+          <option value="django.db.models.fields.related.ForeignKey.email" />
+          <option value="django.db.models.fields.related.OneToOneField.email" />
+          <option value="django.db.models.fields.related.OneToOneField.image" />
+          <option value="users.models.UsersOrderable.objects" />
+          <option value="django.db.models.fields.related.ForeignKey.pk" />
+          <option value="django.db.models.fields.related.ForeignKey.id" />
+          <option value="entrega.models.Entrega.objects" />
+          <option value="utils.validator.ValidatorData.request" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.listing_view" />
+          <option value="object.listing_view" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.query_set" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_teste_query_set" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.get_query_set" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.model" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.detail_query_set" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.listing_query_set" />
+          <option value="str.items" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.simple_query_set" />
+          <option value="api_resources.model_mixins.ModelCacheMixin.list_for_company" />
+          <option value="django.db.models.fields.related.ForeignKey.subtitle" />
+          <option value="django.db.models.fields.DateTimeField.month" />
+          <option value="django.db.models.fields.DateTimeField.day" />
+          <option value="django.db.models.fields.DateTimeField.strftime" />
+          <option value="django.db.models.fields.DateTimeField.hour" />
+          <option value="tuple.type_object" />
+          <option value="tuple.request" />
+          <option value="modelcluster.fields.ParentalKey.title" />
+          <option value="tuple.user" />
+          <option value="tuple.method" />
+          <option value="tuple.object_type" />
+          <option value="tuple.delete_action" />
+          <option value="tuple.status_code" />
+          <option value="tuple.get_delete_action" />
+          <option value="tuple.get_true_method" />
+          <option value="tuple.body" />
+          <option value="tuple.key_field" />
+          <option value="django.db.models.fields.related.ForeignKey.detail_api_url" />
+          <option value="list.all" />
+          <option value="django.db.models.fields.related.ForeignKey.trigger" />
+          <option value="django.db.models.fields.related.ForeignKey.editor" />
+          <option value="django.db.models.fields.related.ForeignKey.subject" />
+          <option value="django.db.models.fields.related.ForeignKey.status" />
+          <option value="django.db.models.fields.related.ForeignKey.type_notification" />
+          <option value="users.widgets.ChooserMixin.request" />
+          <option value="html_master.models.HtmlMaster.objects" />
+          <option value="django.db.models.fields.related.ManyToManyField.through" />
+          <option value="dict.append" />
+          <option value="wagtail.core.fields.StreamField.stream_data" />
+          <option value="financial.models.Financial.objects" />
+          <option value="list.encode" />
+          <option value="object.get_admin_urls_for_registration" />
+          <option value="admin_panel.csv_hooks.ExportModelAdminMixin.url_helper" />
+          <option value="company.csv_hooks.ExportModelAdminMixin.url_helper" />
+          <option value="str.first" />
+          <option value="modelcluster.fields.ParentalKey.social_reason" />
+          <option value="modelcluster.fields.ParentalKey.cpf_cnpj" />
+          <option value="modelcluster.fields.ParentalKey.pessoa" />
+          <option value="modelcluster.fields.ParentalKey.fantasy_name" />
+          <option value="modelcluster.fields.ParentalKey.financial_situation" />
+          <option value="map_hash.keys" />
+          <option value="map_hash.items" />
+          <option value="relations.models.Relation.filter" />
+          <option value="relations.models.Relation.objects" />
+          <option value="sync.models.Synchronize.objects" />
+          <option value="customfields.actions.form._choice_api_obj.get_all_fields" />
+          <option value="contracted_services.models.ContractedService.objects" />
+          <option value="django.db.models.fields.related.ForeignKey.pipedrive_org_id" />
+          <option value="django.db.models.fields.related.ForeignKey.pipe_ltv_id" />
+          <option value="django.contrib.postgres.fields.jsonb.JSONField.__setitem__" />
+          <option value="django.db.models.fields.related.ForeignKey.category" />
+          <option value="django.db.models.fields.related.ForeignKey.relation" />
+          <option value="django.db.models.fields.related.ForeignKey.members" />
+          <option value="django.db.models.fields.related.ForeignKey.tags" />
+          <option value="company.models.company.CompanyFiles.objects" />
+          <option value="contracted_services.models.ContractServiceFiles.objects" />
+          <option value="django.db.models.fields.related.ForeignKey.pipe_user_id" />
+          <option value="resources.common.custom_autocomplete.CustomAutocomplete.target_model" />
+          <option value="django.db.models.fields.related.ManyToManyField.set" />
+          <option value="django.db.models.fields.related.ManyToManyField.save_m2m" />
+          <option value="wagtail.contrib.modeladmin.options.ModelAdmin.save_related" />
+          <option value="django.db.models.fields.related.ForeignKey.created_at" />
+          <option value="django.db.models.fields.related.ForeignKey.get_relation_category" />
+          <option value="django.db.models.fields.related.ManyToManyField.all" />
+          <option value="django.db.models.fields.related.ManyToManyField.count" />
+          <option value="dict.fields" />
+          <option value="rest_framework.authtoken.models.Token.objects" />
+          <option value="django.contrib.contenttypes.models.ContentType.DoesNotExist" />
+          <option value="django.db.models.fields.related.ForeignKey.cnaes" />
+          <option value="django.db.models.fields.related.ForeignKey.test_cnae" />
+          <option value="django.db.models.fields.related.ForeignKey.code" />
+          <option value="django.db.models.fields.related.ForeignKey.iss" />
+          <option value="django.db.models.fields.related.ForeignKey.icms" />
+          <option value="users.orderable.UsersOrderable.members" />
+          <option value="utils.country.countries.CountryBaseMeta._documents" />
+          <option value="utils.country.utils.CountriesMeta.country_list" />
+          <option value="utils.country.countries.CountryBaseMeta._states" />
+          <option value="utils.country.countries.CountryBaseMeta._DOCUMENTS" />
+          <option value="utils.country.countries.CountryBaseMeta._STATES" />
+          <option value="utils.system.abstract_models.PseudonymizedModel._meta" />
+          <option value="address.services.CustomerService.name" />
+          <option value="customer.models.Customer.objects" />
+          <option value="_importlib_modulespec.ModuleType.struct_class" />
+          <option value="address.models.Address.objects" />
+          <option value="payment_gateway.models.PaymentGateway.objects" />
+          <option value="_importlib_modulespec.ModuleType.CustomerService" />
+          <option value="utils.system.utils.BaseStruct.service" />
+          <option value="customer.models.Customer.payment_gateway" />
+          <option value="item.models.item_category.ItemCategory.objects" />
+          <option value="item.models.item.Item.objects" />
+          <option value="plugins.iugu.views.InvoiceApiView.request" />
+          <option value="invoice.models.invoice.Invoice.objects" />
+          <option value="invoice.models.invoice.Invoice.receipt" />
+          <option value="invoice.models.invoice.Invoice.item" />
+          <option value="utils.system.abstract_struct.IService.save" />
+          <option value="utils.system.abstract_struct.IService.get" />
+          <option value="utils.system.abstract_service.IService.save" />
+          <option value="utils.system.abstract_service.IService.get" />
+          <option value="invoice.models.receipt.Receipt.objects" />
+          <option value="utils.system.abstract_models.BaseModel.objects" />
+          <option value="utils.system.error.IError.json" />
+          <option value="property.setter" />
+          <option value="django.db.models.fields.related.ForeignKey.gateway_id" />
+          <option value="tuple.model_path" />
+          <option value="iclient.IClient.token" />
+          <option value="subscription.models.subscription.Subscription.item" />
+          <option value="django.db.models.base.Model.id" />
+          <option value="util.system.abstract_struct.IBaseStruct.items" />
+          <option value="util.system.abstract_models.BaseModel.item" />
+          <option value="util.system.abstract_struct.IBaseStruct.custom_variables" />
+          <option value="util.system.abstract_models.BaseModel.receipt" />
+          <option value="util.system.abstract_struct.IBaseStruct.receipts" />
+          <option value="util.system.abstract_struct.IBaseStruct.subscription_id" />
+          <option value="util.system.abstract_struct.IBaseStruct.payment_gateway" />
+          <option value="util.system.abstract_struct.IBaseStruct.customer_id" />
+          <option value="util.system.abstract_struct.IBaseStruct.fines" />
+          <option value="util.system.abstract_struct.IBaseStruct.interests" />
+          <option value="util.system.abstract_struct.IBaseStruct.gateway_id" />
+          <option value="util.system.abstract_struct.CustomerRelations.struct" />
+          <option value="util.system.abstract_struct.CustomerRelations.instance" />
+          <option value="util.system.abstract_models.BaseModel.items" />
+          <option value="util.system.abstract_struct.IBaseStruct.plan" />
+          <option value="util.system.abstract_struct.IBaseStruct.customer" />
+          <option value="customer.models.Customer.invoice" />
+          <option value="customer.models.Customer.invoices" />
+          <option value="cron.api.customer.status.MetaCron.model" />
+          <option value="cron.api.customer.status.MetaCron.name" />
+          <option value="cron.api.abstract.MetaCron.model" />
+          <option value="cron.api.abstract.MetaCron.name" />
+          <option value="cron.api.abstract.MetaCron2.model" />
+          <option value="cron.api.abstract.MetaCron2.name" />
+          <option value="cron.api.abstract.CronSetup.name" />
+          <option value="cron.api.abstract.CronSetup.model" />
+          <option value="apps.fail.models.fail_item.FailParameterCategory.parameters" />
+          <option value="util.wagtail_blocks.filters.FilterConditional.block" />
+          <option value="django.db.models.fields.related.ForeignKey.object_type" />
+          <option value="django.db.models.query.QuerySet.active" />
+          <option value="django.db.models.query.QuerySet.object_type" />
+          <option value="util.country.countries.CountryBaseMeta._DOCUMENTS" />
+          <option value="util.country.countries.CountryBaseMeta._STATES" />
+          <option value="django.db.models.fields.related.ForeignKey.interval_type" />
+          <option value="django.db.models.fields.CharField.strip" />
+          <option value="django.db.models.base.Model.object_id" />
+          <option value="inadimplentes.test.comparator_v2.pipe_container" />
+          <option value="inadimplentes.v2.integration.sequence.IDefaulter.status" />
+          <option value="django.db.models.query.QuerySet.get_all_defaulters" />
+          <option value="util.system.custom_types.ModelType.first" />
+          <option value="util.system.abstract_models.BaseModel.invoices" />
+          <option value="util.system.abstract_struct.IBaseStruct.invoice_id" />
+          <option value="util.system.abstract_struct.IBaseStruct.invoice" />
+          <option value="apps.subscription.models.subscription.Generic.payment_gateway" />
+          <option value="apps.subscription.models.subscription.Generic.gateway_id" />
+          <option value="django.db.models.base.Model.objects" />
+          <option value="wagtail.core.models.Orderable.objects" />
+          <option value="util.system.abstract_struct.instance" />
+          <option value="util.system.abstract_models.BaseModel.plan" />
+          <option value="apps.item.models.orderable.ItemSubscription.objects" />
+          <option value="apps.invoice.models.orderable.ReceiptInvoice.objects" />
+          <option value="python_iugu.model.subscription_model.SubItemModel.sub_category" />
+          <option value="apps.tax.models.orderable.FineInvoice.objects" />
+          <option value="apps.tax.models.orderable.InterestInvoice.objects" />
+          <option value="apps.tax.struct.abstract._model.objects" />
+          <option value="django.db.models.query.QuerySet.items" />
+          <option value="django.db.models.query.QuerySet.current_installment" />
+          <option value="apps.subscription.services.generic.ItemsInstallmentsCtx.s_item" />
+          <option value="django.db.models.fields.related.ForeignKey.form_id" />
+          <option value="django.db.models.fields.related.ForeignKey.form" />
+          <option value="django.db.models.fields.related.ForeignKey.file" />
+          <option value="marketing.models.process.MarketingPost.objects" />
+          <option value="wagtail.documents.models.Document.id" />
+          <option value="marketing.models.process.Cycle.posts" />
+          <option value="marketing.models.process.Cycle.objects" />
+          <option value="marketing.services.stage.update.List" />
+          <option value="dict.approved_posts" />
+          <option value="dict.briefing_started" />
+          <option value="marketing.models.process.MarketingPost.DoesNotExist" />
+          <option value="marketing.models.process.FilesAttachment.objects" />
+          <option value="django.db.models.fields.DateTimeField.year" />
+          <option value="django.db.models.base.Model.api_fields" />
+          <option value="invites.models.Invite.objects" />
+          <option value="invites.models.Invite.DoesNotExist" />
+          <option value="django.db.models.base.Model.company_id" />
+          <option value="mailings.models.mailing.Mailing.objects" />
+          <option value="users.orderable.UsersOrderable.categories" />
+          <option value="system_notifications.models.Category.objects" />
+          <option value="django.db.models.base.Model.tracker" />
+          <option value="django.db.models.base.Model.services" />
+          <option value="django.db.models.base.Model.fields_monitor" />
+          <option value="company.services.company.CompanyService.members" />
+          <option value="users.orderable.CategoriesOrderable.objects" />
+          <option value="resources.common.util.ModelType.values_list" />
+          <option value="incorporate.models.cnae_orderable.CnaeOrderableGroups.objects" />
+          <option value="resources.common.util.ModelType.filter" />
+          <option value="list.to_representation" />
+          <option value="company.models.category.CnaeCompany.objects" />
+          <option value="django.db.models.fields.related.ForeignKey.ie" />
+          <option value="resources.common.util.ModelType.count" />
+          <option value="typing.ValuesView.values" />
+          <option value="resources.common.util.ModelType.select_related" />
+          <option value="django.db.models.fields.related.ForeignKey.full_name" />
+          <option value="apps.posts.models.Post.likes" />
+          <option value="apps.post_statistics.models.PostStatistic.DoesNotExist" />
+          <option value="utils.types.ModelType.count" />
+          <option value="utils.types.ModelType.aggregate" />
+          <option value="resources.common.util.ModelType.order_by" />
+          <option value="logs.services.manager.MethodEnum.value" />
+          <option value="django.db.models.base.Model.updated_at" />
+          <option value="django.db.models.base.Model.created_at" />
+          <option value="utils.types.ModelType.order_by" />
+          <option value="wagtail.core.models.Orderable.id" />
+          <option value="tuple.object" />
+          <option value="django.core.handlers.wsgi.WSGIRequest.user" />
+          <option value="reversion.models.Revision.objects" />
+          <option value="reversion.models.Revision.id" />
+          <option value="reversion.models.Version.id" />
+          <option value="django.db.models.fields.related.ForeignKey.term" />
+          <option value="django.db.models.fields.related.ForeignKey.version" />
+          <option value="utils.models.typing.QuerySetTyping.filter" />
+          <option value="terms.services.services.Protocol" />
+          <option value="utils.models.typing.QuerySetTyping.values_list" />
+          <option value="utils.models.typing.QuerySetTyping.prefetch_related" />
+          <option value="terms.services.services.Set" />
+          <option value="utils.models.typing.QuerySetTyping.update" />
+          <option value="utils.models.typing.QuerySetTyping.count" />
+          <option value="utils.models.typing.QuerySetTyping.order_by" />
+          <option value="terms.serializers.List" />
+          <option value="sanic.app.Sanic.aiohttp_session" />
+          <option value="object.objects" />
+          <option value="django.db.models.base.Model.serializer_class" />
+          <option value="django.db.models.base.Model._meta" />
+          <option value="django.db.models.base.Model.content_serializer_class" />
+          <option value="bookings.serializers.booking.serializers" />
+          <option value="django.db.models.fields.related.ForeignKey.responsible_name" />
+          <option value="mailings.models.mailing.Mailing.scans" />
+          <option value="utils.wagtail_extensions.tests.Dict" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
