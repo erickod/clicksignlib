@@ -18,7 +18,7 @@ def wait_futures(*futures: Coroutine) -> Union[Future, Coroutine]:
     return asyncio.gather(*r2)
 
 
-async def wait_future(future: Coroutine) -> Future:
+async def wait_future(future: Coroutine) -> Coroutine:
     coro = await future.response_data
     return await coro.json()
 
