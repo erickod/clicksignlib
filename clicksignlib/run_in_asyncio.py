@@ -27,6 +27,6 @@ def run(*futures: Coroutine) -> Generic[_T]:
     loop = asyncio.get_event_loop()
     coro = wait_futures(*futures)
     if VERSION >= 3.7:
-        asyncio.run(coro)
+        return asyncio.run(coro)
 
     return loop.run_until_complete(coro)
