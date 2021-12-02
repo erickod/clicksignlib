@@ -4,9 +4,6 @@ import httpx
 
 
 class HttpxAdapter:
-    def __init__(self) -> None:
-        self._client = httpx.AsyncClient()
-
     async def get(self, url: str) -> Coroutine:
         async with httpx.AsyncClient() as client:
             return await client.get(url=url)
