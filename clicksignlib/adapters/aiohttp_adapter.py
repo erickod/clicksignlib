@@ -10,6 +10,7 @@ class AioHttpAdapter:
     ) -> aiohttp.ClientResponse:
         async with session.request(method, url, json=json) as response:
             await response.read()
+            response.status_code = response.status
             return response
 
     async def _request(
