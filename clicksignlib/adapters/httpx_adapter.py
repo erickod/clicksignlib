@@ -9,13 +9,16 @@ class HttpxAdapter:
 
     async def get(self, url: str) -> Coroutine:
         async with httpx.AsyncClient() as client:
-            return await client.get("https://axoltlapi.herokuapp.com/")
+            return await client.get(url=url)
 
     async def post(self, url: str, json) -> Coroutine:
-        return await client.get("https://axoltlapi.herokuapp.com/")
+        async with httpx.AsyncClient() as client:
+            return await client.post(url=url, json=json)
 
     async def put(self, url: str, json) -> Coroutine:
-        return await client.get("https://axoltlapi.herokuapp.com/")
+        async with httpx.AsyncClient() as client:
+            return await client.put(url=url, json=json)
 
     async def delete(self, url: str) -> Coroutine:
-        return await client.get("https://axoltlapi.herokuapp.com/")
+        async with httpx.AsyncClient() as client:
+            return await client.delete(url=url)
