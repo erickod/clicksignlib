@@ -7,7 +7,7 @@ from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Result
-from clicksignlib.utils.errors import InvalidKeyError
+from clicksignlib.utils.validators import UUIDValidator
 
 
 class DocumentHandler(EndpointMixin):
@@ -41,10 +41,8 @@ class DocumentHandler(EndpointMixin):
         template_key: str,
         template_data: Dict[str, Any],
     ) -> Result:
-        try:
-            uuid.UUID(template_key)
-        except ValueError:
-            raise InvalidKeyError(target="template_key")
+
+        UUIDValidator(field_name="template_key").validate(template_key)
 
         remote_path = Path("/", document_type, filename)
         request_payload = {
