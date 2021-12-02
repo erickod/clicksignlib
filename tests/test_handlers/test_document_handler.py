@@ -3,7 +3,7 @@ import uuid
 import clicksignlib
 import pytest
 from clicksignlib.environments import SandboxEnvironment
-from clicksignlib.errors import InvalidKeyError
+from clicksignlib.utils.errors import InvalidKeyError
 
 access_token = "any valid token"
 api_version = "/api/v1"

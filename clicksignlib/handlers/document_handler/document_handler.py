@@ -4,10 +4,10 @@ from typing import Any, Dict
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
-from clicksignlib.errors import InvalidKeyError
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Result
+from clicksignlib.utils.errors import InvalidKeyError
 
 
 class DocumentHandler(EndpointMixin):
