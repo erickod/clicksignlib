@@ -1,18 +1,32 @@
 import asyncio
 import sys
-from typing import Coroutine, Generic, TypeVar
+from asyncio import Future
+from typing import Coroutine, Generic, TypeVar, Union
 
 _T = TypeVar("_T")
+VERSION = float(f"{sys.version_info.major}.{sys.version_info.minor}")
 
 
-async def wait_futures(futures: Coroutine) -> Generic[_T]:
-    VERSION = float(f"{sys.version_info.major}.{sys.version_info.minor}")
-    if VERSION >= 3.7:
-        asyncio.run("groups")
-    coro = await futures.response_data
+def wait_futures(*futures: Coroutine) -> Union[Future, Coroutine]:
+    total = len(futures)
+    r2 = ()
+    for future in futures:
+        r = wait_future(future)
+        if total == 1:
+            return r
+        r2 = r2 + (r,)
+    return asyncio.gather(*r2)
+
+
+async def wait_future(future: Coroutine) -> Future:
+    coro = await future.response_data
     return await coro.json()
 
 
-def run(futures: Coroutine) -> Generic[_T]:
+def run(*futures: Coroutine) -> Generic[_T]:
     loop = asyncio.get_event_loop()
-    return loop.run_until_complete(wait_futures(futures))
+    coro = wait_futures(*futures)
+    if VERSION >= 3.7:
+        asyncio.run(coro)
+
+    return loop.run_until_complete(coro)
