@@ -4,18 +4,27 @@ import httpx
 
 
 class HttpxAdapter:
-    def __init__(self) -> None:
-        self._client = httpx.AsyncClient()
+    async def _make_async(self, data):
+        json_data = data.json()
+
+        async def json():
+            return json_data
+
+        data.json = json
+        return data
 
     async def get(self, url: str) -> Coroutine:
         async with httpx.AsyncClient() as client:
-            return await client.get("https://axoltlapi.herokuapp.com/")
+            return await self._make_async(await client.get(url=url))
 
     async def post(self, url: str, json) -> Coroutine:
-        return await client.get("https://axoltlapi.herokuapp.com/")
+        async with httpx.AsyncClient() as client:
+            return await self._make_async(await client.post(url=url, json=json))
 
     async def put(self, url: str, json) -> Coroutine:
-        return await client.get("https://axoltlapi.herokuapp.com/")
+        async with httpx.AsyncClient() as client:
+            return await self._make_async(await client.put(url=url, json=json))
 
     async def delete(self, url: str) -> Coroutine:
-        return await client.get("https://axoltlapi.herokuapp.com/")
+        async with httpx.AsyncClient() as client:
+            return await self._make_async(await client.delete(url=url))
