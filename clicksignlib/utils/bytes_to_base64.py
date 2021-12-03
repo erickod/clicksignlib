@@ -13,5 +13,5 @@ def bytes_to_base64(file_path: str, data: bytes, decode="utf-8") -> Union[str, b
     raw_bytes = base64.b64encode(data)
     file_bytes64: Union[bytes, str] = raw_bytes
     if decode:
-        file_bytes64 = raw_bytes.decode(decode)
-    return f"{header_dict[file_extension]}{file_bytes64}"
+        return f"{header_dict[file_extension]}{raw_bytes.decode(decode)}"
+    return header_dict[file_extension].encode() + file_bytes64
