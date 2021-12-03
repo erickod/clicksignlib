@@ -59,3 +59,11 @@ class DocumentHandler(EndpointMixin):
         endpoint = f"/api/v1/documents?access_token={self.config.access_token}&page={page_number}"
         res = self.config.requests.get(url=f"{self.base_endpoint}{endpoint}")
         return Result(request_data={}, response_data=res)
+
+    def detail(self, *, document_key: str) -> Result:
+        UUIDValidator(field_name="document_key").validate(document_key)
+        endpoint = (
+            f"/api/v1/documents/{document_key}?access_token={self.config.access_token}"
+        )
+        res = self.config.requests.get(url=f"{self.base_endpoint}{endpoint}")
+        return Result(request_data={}, response_data=res)
