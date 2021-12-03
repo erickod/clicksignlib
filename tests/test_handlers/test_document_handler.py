@@ -92,4 +92,7 @@ def test_DocumentHandler_list_calls_get_from_adapter_with_right_params(page_numb
         requests_adapter=adapter,
     )
     sut.list(page_number=page_number)
-    adapter.get.assert_called_with(url=f"{sut.full_endpoint}&page={page_number}")
+    endpoint = (
+        f"/api/v1/documents?access_token={sut.config.access_token}&page={page_number}"
+    )
+    adapter.get.assert_called_with(url=f"{sut.base_endpoint}{endpoint}")
