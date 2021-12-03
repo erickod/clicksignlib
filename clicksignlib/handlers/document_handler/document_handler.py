@@ -56,5 +56,6 @@ class DocumentHandler(EndpointMixin):
         return Result(request_data=request_payload, response_data=res)
 
     def list(self, *, page_number: int) -> Result:
-        res = self.config.requests.get(url=f"{self.full_endpoint}&page={page_number}")
+        endpoint = f"/api/v1/documents?access_token={self.config.access_token}&page={page_number}"
+        res = self.config.requests.get(url=f"{self.base_endpoint}{endpoint}")
         return Result(request_data={}, response_data=res)
