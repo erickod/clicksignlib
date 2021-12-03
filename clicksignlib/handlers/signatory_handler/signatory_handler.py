@@ -28,18 +28,16 @@ class SignatoryHandler(EndpointMixin):
     @property
     def full_endpoint(self) -> str:
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
-        endpoint = f"{endpoint}/signers?access_token={self.config.access_token}"
-
-        return endpoint
+        return f"{endpoint}/signers?access_token={self.config.access_token}"
 
     def create(
         self,
         *,
         name: str,
         cpf: str,
-        birthday: str,
-        email: str,
-        phone_number: str,
+        birthday: str = "",
+        email: str = "",
+        phone_number: str = "",
         notify: bool = True,
     ) -> Any:
         request_payload = {
