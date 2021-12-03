@@ -1,11 +1,11 @@
 import asyncio
 import sys
 from asyncio import Future
-from typing import Any, Coroutine, Dict, Generic, List, Tuple, TypeVar, Union
+from typing import Any, Coroutine, Dict, List, Tuple, Union
 
 from clicksignlib.utils import Result
+from clicksignlib.utils.errors import ApiError
 
-_T = TypeVar("_T")
 VERSION = float(f"{sys.version_info.major}.{sys.version_info.minor}")
 
 
@@ -22,13 +22,14 @@ def wait_futures(*results: Result) -> Union[Future, Coroutine]:
 
 async def wait_future(result: Result) -> Dict[str, Any]:
     coro = await result.response_data
+    response = await coro.json()
     if coro.status_code not in [
         200,
         201,
         202,
     ]:
-        raise NotImplementedError
-    return await coro.json()
+        raise ApiError(coro.status_code, response["errors"][0])
+    return response
 
 
 def run(*results: Result) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
