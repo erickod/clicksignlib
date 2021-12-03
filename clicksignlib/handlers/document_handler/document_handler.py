@@ -29,9 +29,7 @@ class DocumentHandler(EndpointMixin):
     @property
     def full_endpoint(self) -> str:
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
-        endpoint = f"{endpoint}/templates/{'{}'}/documents?access_token={self.config.access_token}"
-
-        return endpoint
+        return f"{endpoint}/templates/{'{}'}/documents?access_token={self.config.access_token}"
 
     def create_from_template(
         self,
@@ -56,3 +54,7 @@ class DocumentHandler(EndpointMixin):
         )
 
         return Result(request_data=request_payload, response_data=res)
+
+    def list(self, *, page_number: int) -> Result:
+        res = self.config.requests.get(url=f"{self.full_endpoint}&page={page_number}")
+        return Result(request_data={}, response_data=res)
