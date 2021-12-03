@@ -40,9 +40,7 @@ def test_DocumentHandler_full_endpoint_return() -> None:
         access_token=access_token, environment=env, api_version=api_version
     )
     endpoint = f"{sut.base_endpoint}{sut.config.api_version}"
-    endpoint = (
-        f"{endpoint}/templates/{'{}'}/documents?access_token={sut.config.access_token}"
-    )
+    endpoint = f"{endpoint}/documents?access_token={sut.config.access_token}"
     assert sut.full_endpoint == endpoint
 
 

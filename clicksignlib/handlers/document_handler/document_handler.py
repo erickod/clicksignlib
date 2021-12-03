@@ -15,7 +15,7 @@ class DocumentHandler(EndpointMixin):
         *,
         access_token: str,
         environment: IEnvironment,
-        api_version: str = "/api/v2",
+        api_version: str = "/api/v1",
         requests_adapter=requests,
     ) -> None:
         self.config = Config(
@@ -28,7 +28,7 @@ class DocumentHandler(EndpointMixin):
     @property
     def full_endpoint(self) -> str:
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
-        return f"{endpoint}/templates/{'{}'}/documents?access_token={self.config.access_token}"
+        return f"{endpoint}/documents?access_token={self.config.access_token}"
 
     def __bytes_to_base64(
         self,
@@ -44,7 +44,6 @@ class DocumentHandler(EndpointMixin):
         document_type: str,
         data: bytes,
     ) -> Result:
-        endpoint = f"{self.base_endpoint}/api/v1/documents?access_token={self.config.access_token}"
         filename: str = Path(file_path).name
         request_payload: Dict[str, Any] = {
             "document": {
@@ -57,7 +56,7 @@ class DocumentHandler(EndpointMixin):
             }
         }
 
-        res = self.config.requests.post(endpoint, request_payload)
+        res = self.config.requests.post(self.full_endpoint, request_payload)
         return Result(request_data=request_payload, response_data=res)
 
     def create_from_file(
@@ -86,15 +85,16 @@ class DocumentHandler(EndpointMixin):
                 "template": {"data": template_data},
             }
         }
+        endpoint = f"{self.base_endpoint}/api/v2"
+        endpoint = f"{endpoint}/templates/{'{}'}/documents?access_token={self.config.access_token}"
         res = self.config.requests.post(
-            self.full_endpoint.format(template_key), json=request_payload
+            endpoint.format(template_key), json=request_payload
         )
 
         return Result(request_data=request_payload, response_data=res)
 
     def list(self, *, page_number: int) -> Result:
-        endpoint = f"/api/v1/documents?access_token={self.config.access_token}&page={page_number}"
-        res = self.config.requests.get(url=f"{self.base_endpoint}{endpoint}")
+        res = self.config.requests.get(url=f"{self.full_endpoint}&page={page_number}")
         return Result(request_data={}, response_data=res)
 
     def detail(self, *, document_key: str) -> Result:
