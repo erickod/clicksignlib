@@ -1,12 +1,11 @@
-import uuid
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Union
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
-from clicksignlib.utils import Result
+from clicksignlib.utils import Result, bytes_to_base64
 from clicksignlib.utils.validators import UUIDValidator
 
 
@@ -30,6 +29,44 @@ class DocumentHandler(EndpointMixin):
     def full_endpoint(self) -> str:
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
         return f"{endpoint}/templates/{'{}'}/documents?access_token={self.config.access_token}"
+
+    def __bytes_to_base64(
+        self,
+        file_path: str,
+        data: bytes,
+        decode="utf-8",
+    ) -> Union[str, bytes]:
+        return bytes_to_base64(file_path, data, decode=decode)
+
+    def create_from_bytes(
+        self,
+        file_path: str,
+        document_type: str,
+        data: bytes,
+    ) -> Result:
+        endpoint = f"{self.base_endpoint}/api/v1/documents?access_token={self.config.access_token}"
+        filename: str = Path(file_path).name
+        request_payload: Dict[str, Any] = {
+            "document": {
+                "path": f"/{document_type}/{filename}",
+                "content_base64": self.__bytes_to_base64(file_path, data),
+                # "deadline_at": "2020-01-05T14:30:59-03:00",
+                "auto_close": True,
+                "locale": "pt-BR",
+                "sequence_enabled": False,
+            }
+        }
+
+        res = self.config.requests.post(endpoint, request_payload)
+        return Result(request_data=request_payload, response_data=res)
+
+    def create_from_file(
+        self,
+        file_path: str,
+        document_type: str,
+    ) -> Result:
+        with open(file_path, "rb") as f:
+            return self.create_from_bytes(file_path, document_type, f.read())
 
     def create_from_template(
         self,
