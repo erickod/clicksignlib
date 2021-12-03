@@ -96,3 +96,13 @@ def test_DocumentHandler_list_calls_get_from_adapter_with_right_params(page_numb
         f"/api/v1/documents?access_token={sut.config.access_token}&page={page_number}"
     )
     adapter.get.assert_called_with(url=f"{sut.base_endpoint}{endpoint}")
+
+
+def test_DocumentHandler_detail_returns_a_Result():
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+
+    assert (
+        type(sut.detail(document_key="cf89212c-68d8-4cdc-a7aa-c42a194798f3")) is Result
+    )
