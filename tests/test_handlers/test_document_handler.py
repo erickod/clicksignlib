@@ -1,8 +1,10 @@
 import uuid
+from unittest.mock import Mock
 
 import clicksignlib
 import pytest
 from clicksignlib.environments import SandboxEnvironment
+from clicksignlib.utils import Result
 from clicksignlib.utils.errors import InvalidKeyError
 
 access_token = "any valid token"
@@ -70,3 +72,24 @@ def test_DocumentHandler_raises_when_create_from_template_receives_an_invalid_ke
             template_key="invalid key",
             template_data=template_data,
         )
+
+
+def test_DocumentHandler_list_returns_a_Result():
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+
+    assert type(sut.list(page_number=1)) is Result
+
+
+@pytest.mark.parametrize("page_number", [1, 10, 15, 150])
+def test_DocumentHandler_list_calls_get_from_adapter_with_right_params(page_number):
+    adapter = Mock()
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=adapter,
+    )
+    sut.list(page_number=page_number)
+    adapter.get.assert_called_with(url=f"{sut.full_endpoint}&page={page_number}")
