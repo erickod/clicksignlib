@@ -29,3 +29,12 @@ class SignerType(Enum):
     LESSOR = "lessor"
     LESSEE = "lessee"
     SURETY = "surety"
+
+
+class Auth(Enum):
+    EMAIL = "email"
+    SMS = "sms"
+    WHATSAPP = "whatsapp"
+    PIX = "pix"
+    API = "api"
+    ICP_BRASIL = "icp_brasil"

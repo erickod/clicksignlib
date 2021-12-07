@@ -5,3 +5,7 @@ class InvalidKeyError(Exception):
         if target:
             erro_msg += " to {}".format(target)
         super().__init__(erro_msg)
+
+
+class RequiredParameters(Exception):
+    pass
