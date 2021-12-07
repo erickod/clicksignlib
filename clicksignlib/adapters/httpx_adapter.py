@@ -1,3 +1,5 @@
+import contextlib
+import json
 from typing import Coroutine
 
 import httpx
@@ -5,12 +7,14 @@ import httpx
 
 class HttpxAdapter:
     async def _make_async(self, data):
-        json_data = data.json()
+        json_data = {}
+        with contextlib.suppress(json.decoder.JSONDecodeError):
+            json_data = data.json()
 
-        async def json():
+        async def async_json():
             return json_data
 
-        data.json = json
+        data.json = async_json
         return data
 
     async def get(self, url: str) -> Coroutine:
