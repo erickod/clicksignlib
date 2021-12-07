@@ -13,6 +13,7 @@ template_key = str(uuid.uuid4())
 valid_template_filename = "test.docx"
 invalid_template_filename = "test.ppt"
 template_data = {"key": "value"}
+document_key = "cf89212c-68d8-4cdc-a7aa-c42a194798f3"
 env = SandboxEnvironment()
 
 
@@ -101,6 +102,18 @@ def test_DocumentHandler_detail_returns_a_Result():
         access_token=access_token, environment=env, api_version=api_version
     )
 
-    assert (
-        type(sut.detail(document_key="cf89212c-68d8-4cdc-a7aa-c42a194798f3")) is Result
+    assert type(sut.detail(document_key=document_key)) is Result
+
+
+def test_DocumentHandler_create_from_bytes_returns_a_Result() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
     )
+    assert type(sut.create_from_bytes("test.docx", "test", data=b"any bytes")) is Result
+
+
+def test_finish_document_returns_a_Result() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+    assert type(sut.finish(document_key=document_key)) is Result
