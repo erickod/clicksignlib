@@ -152,3 +152,23 @@ def test_cancel_document_calls_patch_from_request_adapter() -> None:
         url=f"{sut.base_endpoint}/api/v1/documents/{document_key}/cancel?access_token={access_token}",
         json={},
     )
+
+
+def test_delete_document_returns_a_Result() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+    assert type(sut.delete(document_key=document_key)) is Result
+
+
+def test_delete_calls_patch_from_request_adapter() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=Mock(),
+    )
+    sut.delete(document_key=document_key)
+    sut.config.requests.delete.assert_called_with(
+        url=f"{sut.base_endpoint}/api/v1/documents/{document_key}?access_token={access_token}"
+    )
