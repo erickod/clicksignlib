@@ -28,3 +28,7 @@ class HttpxAdapter:
     async def delete(self, url: str) -> Coroutine:
         async with httpx.AsyncClient() as client:
             return await self._make_async(await client.delete(url=url))
+
+    async def patch(self, url: str, json) -> Coroutine:
+        async with httpx.AsyncClient() as client:
+            return await self._make_async(await client.patch(url=url, json=json))
