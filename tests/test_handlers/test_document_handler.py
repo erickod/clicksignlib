@@ -128,5 +128,6 @@ def test_finish_document_calls_patch_from_request_adapter() -> None:
     )
     sut.finish(document_key=document_key)
     sut.config.requests.patch.assert_called_with(
-        url=f"{sut.base_endpoint}/api/v1/documents/{document_key}/finish?access_token={access_token}"
+        url=f"{sut.base_endpoint}/api/v1/documents/{document_key}/finish?access_token={access_token}",
+        json={},
     )
