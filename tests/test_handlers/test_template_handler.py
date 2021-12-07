@@ -80,3 +80,14 @@ def test_TemplateHandler_list_method_calls_adapter_get() -> None:
     )
     sut.list()
     request.get.assert_called_with(sut.full_endpoint)
+
+
+def test_TemplateHandler_create_from_bytes_calls_create() -> None:
+    sut = clicksignlib.handlers.TemplateHandler(
+        access_token=access_token,
+        environment=SandboxEnvironment(),
+        api_version=api_version,
+    )
+    sut.create = Mock()
+    sut.create_from_bytes("test.docx", b"any bytes")
+    sut.create.assert_called()
