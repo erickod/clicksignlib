@@ -107,6 +107,14 @@ class DocumentHandler(EndpointMixin):
         res = self.config.requests.get(url=f"{self.base_endpoint}{endpoint}")
         return Result(request_data={}, response_data=res)
 
+    def delete(self, *, document_key: str) -> Result:
+        UUIDValidator(field_name="document_key").validate(document_key)
+        endpoint = (
+            f"/api/v1/documents/{document_key}?access_token={self.config.access_token}"
+        )
+        res = self.config.requests.delete(url=f"{self.base_endpoint}{endpoint}")
+        return Result(request_data={}, response_data=res)
+
     def finish(self, *, document_key: str) -> Result:
         UUIDValidator(field_name="document_key").validate(document_key)
         endpoint = f"/api/v1/documents/{document_key}/finish?access_token={self.config.access_token}"
