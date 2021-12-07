@@ -1,7 +1,8 @@
 import hashlib
 import hmac
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 import requests
 from clicksignlib.environments.protocols import IEnvironment
@@ -125,6 +126,34 @@ class DocumentHandler(EndpointMixin):
         UUIDValidator(field_name="document_key").validate(document_key)
         endpoint = f"/api/v1/documents/{document_key}/cancel?access_token={self.config.access_token}"
         res = self.config.requests.patch(url=f"{self.base_endpoint}{endpoint}", json={})
+        return Result(request_data={}, response_data=res)
+
+    def configure(
+        self,
+        *,
+        document_key: str,
+        deadline_at: Optional[datetime] = None,
+        auto_close: bool = True,
+        sequence_enabled: bool = False,
+        remind_interval: int = 1,
+    ) -> Result:
+        UUIDValidator(field_name="document_key").validate(document_key)
+        payload = {
+            "auto_close": auto_close,
+            "locale": "pt-BR",
+            "sequence_enabled": sequence_enabled,
+            "remind_interval": remind_interval,
+        }
+
+        if deadline_at:
+            payload["deadline_at"] = deadline_at.strftime("%Y-%m-%dT%H:%M:%S-03:00")
+
+        endpoint = (
+            f"/api/v1/documents/{document_key}?access_token={self.config.access_token}"
+        )
+        res = self.config.requests.patch(
+            url=f"{self.base_endpoint}{endpoint}", json=payload
+        )
         return Result(request_data={}, response_data=res)
 
     def sign_by_api(
