@@ -56,12 +56,12 @@ class SignatoryHandler(EndpointMixin):
         request_payload = {
             "signer": {
                 "name": name,
-                "email": email,
+                # "email": email,
                 "phone_number": phone_number,
                 "auths": [auths.value],
-                "documentation": cpf,
-                "birthday": birthday,
-                "has_documentation": True,
+                # "documentation": cpf,
+                # "birthday": birthday,
+                # "has_documentation": True,
                 "selfie_enabled": False,
                 "handwritten_enabled": False,
                 "official_document_enabled": False,
@@ -69,6 +69,17 @@ class SignatoryHandler(EndpointMixin):
                 "delivery": "email" if notify else None,
             }
         }
+        if email:
+            request_payload["signer"]["email"] = email
+            request_payload["signer"]["auths"].append("email")
+
+        if birthday:
+            request_payload["signer"]["birthday"] = birthday
+
+        if cpf:
+            request_payload["signer"]["documentation"] = cpf
+            request_payload["signer"]["has_documentation"] = True
+
         return Result(
             request_data=request_payload,
             response_data=self.config.requests.post(
