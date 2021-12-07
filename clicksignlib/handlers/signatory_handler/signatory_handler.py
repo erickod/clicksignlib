@@ -5,19 +5,19 @@ from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Result
-
-from .signer_type import SignerType, Auth
 from clicksignlib.utils.errors import RequiredParameters
+
+from .signer_type import Auth, SignerType
 
 
 class SignatoryHandler(EndpointMixin):
     def __init__(
-            self,
-            *,
-            access_token: str,
-            environment: IEnvironment,
-            api_version: str = "/api/v1",
-            requests_adapter=requests,
+        self,
+        *,
+        access_token: str,
+        environment: IEnvironment,
+        api_version: str = "/api/v1",
+        requests_adapter=requests,
     ) -> None:
         self.config = Config(
             access_token=access_token,
@@ -29,27 +29,29 @@ class SignatoryHandler(EndpointMixin):
     @property
     def full_endpoint(self) -> str:
         endpoint = f"{self.base_endpoint}{self.config.api_version}"
-        endpoint = f"{endpoint}/signers?access_token={self.config.access_token}"
-
-        return endpoint
+        return f"{endpoint}/signers?access_token={self.config.access_token}"
 
     def create(
-            self,
-            *,
-            cpf: str,
-            name: str,
-            birthday: str = None,
-            phone_number: str = None,
-            email: str = None,
-            auths: Auth = Auth.EMAIL,
-            notify: bool = True,
+        self,
+        *,
+        name: str,
+        cpf: str,
+        birthday: str = "",
+        email: str = "",
+        phone_number: str = "",
+        auths: Auth = Auth.EMAIL,
+        notify: bool = True,
     ) -> Any:
 
         if auths in (Auth.EMAIL, Auth.API) and not email:
-            raise RequiredParameters("email field is required if auths equal to EMAIL or API.")
+            raise RequiredParameters(
+                "email field is required if auths equal to EMAIL or API."
+            )
 
         if auths in (Auth.WHATSAPP, Auth.SMS) and not phone_number:
-            raise RequiredParameters("phone_number field is required if auths equal to SMS.")
+            raise RequiredParameters(
+                "phone_number field is required if auths equal to SMS."
+            )
 
         request_payload = {
             "signer": {
@@ -75,12 +77,12 @@ class SignatoryHandler(EndpointMixin):
         )
 
     def add_signatory_to_document(
-            self,
-            document_key: str,
-            signer_key: str,
-            signer_type: SignerType,
-            message: str,
-            group: int = 0,
+        self,
+        document_key: str,
+        signer_key: str,
+        signer_type: SignerType,
+        message: str,
+        group: int = 0,
     ) -> Any:
         endpoint: str = f"{self.config.environment.endpoint}/api/v1/lists?"
         endpoint = f"{endpoint}access_token={self.config.access_token}"
