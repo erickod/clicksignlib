@@ -104,4 +104,4 @@ def test_Clicksign_wait_future_method_raises_when_status_code_is_not_acceptable(
 
     with pytest.raises(ApiError):
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(wait_future(result))
+        loop.run_until_complete(wait_future(result, raises=True))
