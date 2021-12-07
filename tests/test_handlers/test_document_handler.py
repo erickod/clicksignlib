@@ -174,7 +174,17 @@ def test_delete_calls_patch_from_request_adapter() -> None:
     )
 
 
-def test_configure_document_returns_a_Result() -> None:
+def test_sign_by_api_returns_a_Result() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+    assert (
+        type(sut.sign_by_api(request_signature_key=document_key, secret_hmac_sha256=""))
+        is Result
+    )
+
+
+def test_configure_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token, environment=env, api_version=api_version
     )
