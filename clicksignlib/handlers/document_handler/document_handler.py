@@ -113,6 +113,12 @@ class DocumentHandler(EndpointMixin):
         res = self.config.requests.patch(url=f"{self.base_endpoint}{endpoint}", json={})
         return Result(request_data={}, response_data=res)
 
+    def cancel(self, *, document_key: str) -> Result:
+        UUIDValidator(field_name="document_key").validate(document_key)
+        endpoint = f"/api/v1/documents/{document_key}/cancel?access_token={self.config.access_token}"
+        res = self.config.requests.patch(url=f"{self.base_endpoint}{endpoint}", json={})
+        return Result(request_data={}, response_data=res)
+
     def api_sign(self, request_signature_key: str, secret_hmac_sha256: str) -> Result:
         UUIDValidator(field_name="request_signature_key").validate(
             request_signature_key
