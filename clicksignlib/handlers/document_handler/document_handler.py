@@ -127,7 +127,9 @@ class DocumentHandler(EndpointMixin):
         res = self.config.requests.patch(url=f"{self.base_endpoint}{endpoint}", json={})
         return Result(request_data={}, response_data=res)
 
-    def api_sign(self, request_signature_key: str, secret_hmac_sha256: str) -> Result:
+    def sign_by_api(
+        self, request_signature_key: str, secret_hmac_sha256: str
+    ) -> Result:
         UUIDValidator(field_name="request_signature_key").validate(
             request_signature_key
         )
