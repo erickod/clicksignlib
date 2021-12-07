@@ -34,7 +34,7 @@ class SignatoryHandler(EndpointMixin):
         self,
         *,
         name: str,
-        cpf: str,
+        cpf: str = "",
         birthday: str = "",
         email: str = "",
         phone_number: str = "",
