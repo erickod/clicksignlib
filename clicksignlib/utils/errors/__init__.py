@@ -1,6 +1,4 @@
-from .invalid_key import InvalidKeyError
-from .invalid_key import RequiredParameters
+from .api_error import ApiError
+from .invalid_key import InvalidKeyError, RequiredParameters
 
-__all__ = [
-    "InvalidKeyError", "RequiredParameters"
-]
+__all__ = ["InvalidKeyError", "RequiredParameters", "ApiError"]
