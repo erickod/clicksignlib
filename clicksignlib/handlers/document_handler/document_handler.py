@@ -1,3 +1,5 @@
+import hashlib
+import hmac
 from pathlib import Path
 from typing import Any, Dict, Union
 
@@ -104,3 +106,38 @@ class DocumentHandler(EndpointMixin):
         )
         res = self.config.requests.get(url=f"{self.base_endpoint}{endpoint}")
         return Result(request_data={}, response_data=res)
+
+    def finish(self, *, document_key: str) -> Result:
+        UUIDValidator(field_name="document_key").validate(document_key)
+        endpoint = f"/api/v1/documents/{document_key}/finish?access_token={self.config.access_token}"
+        res = self.config.requests.patch(url=f"{self.base_endpoint}{endpoint}")
+        return Result(request_data={}, response_data=res)
+
+    def api_sign(self, request_signature_key: str, secret_hmac_sha256: str) -> Result:
+        UUIDValidator(field_name="request_signature_key").validate(
+            request_signature_key
+        )
+        endpoint = (
+            f"{self.base_endpoint}/api/v1/sign??access_token={self.config.access_token}"
+        )
+        request_payload = {
+            "request_signature_key": request_signature_key,
+            "secret_hmac_sha256": self._calc_hmac_sum(
+                request_signature_key, secret_hmac_sha256
+            ),
+        }
+        res = self.config.requests.post(url=endpoint, json=request_payload)
+        return Result(request_data=request_payload, response_data=res)
+
+    def _calc_hmac_sum(
+        self, request_signature_key: str, secret_hmac_sha256: str
+    ) -> str:
+        return (
+            hmac.new(
+                secret_hmac_sha256.encode(),
+                msg=request_signature_key.encode(),
+                digestmod=hashlib.sha256,
+            )
+            .hexdigest()
+            .upper()
+        )
