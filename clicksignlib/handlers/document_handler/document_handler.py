@@ -132,7 +132,7 @@ class DocumentHandler(EndpointMixin):
             request_signature_key
         )
         endpoint = (
-            f"{self.base_endpoint}/api/v1/sign??access_token={self.config.access_token}"
+            f"{self.base_endpoint}/api/v1/sign?access_token={self.config.access_token}"
         )
         request_payload = {
             "request_signature_key": request_signature_key,
@@ -146,12 +146,8 @@ class DocumentHandler(EndpointMixin):
     def _calc_hmac_sum(
         self, request_signature_key: str, secret_hmac_sha256: str
     ) -> str:
-        return (
-            hmac.new(
-                secret_hmac_sha256.encode(),
-                msg=request_signature_key.encode(),
-                digestmod=hashlib.sha256,
-            )
-            .hexdigest()
-            .upper()
-        )
+        return hmac.new(
+            secret_hmac_sha256.encode(),
+            msg=request_signature_key.encode(),
+            digestmod=hashlib.sha256,
+        ).hexdigest()
