@@ -13,3 +13,6 @@ class IRequest(Protocol):
 
     def delete(self, url: str) -> Coroutine:
         pass
+
+    def path(self, url: str, json) -> Coroutine:
+        pass
