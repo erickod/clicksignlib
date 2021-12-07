@@ -172,3 +172,10 @@ def test_delete_calls_patch_from_request_adapter() -> None:
     sut.config.requests.delete.assert_called_with(
         url=f"{sut.base_endpoint}/api/v1/documents/{document_key}?access_token={access_token}"
     )
+
+
+def test_configure_document_returns_a_Result() -> None:
+    sut = clicksignlib.handlers.DocumentHandler(
+        access_token=access_token, environment=env, api_version=api_version
+    )
+    assert type(sut.configure(document_key=document_key)) is Result
