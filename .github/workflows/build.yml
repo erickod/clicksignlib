@@ -1,6 +1,8 @@
-name: test
+name: Build and Package
 
-on: pull_request
+on: 
+  push:
+    branches: [ main ]
 
 jobs:
   test:
@@ -50,6 +52,13 @@ jobs:
       - name: Install library
         run: poetry install --no-interaction
 
+      #----------------------------------------------
+      #              build artifacts
+      #----------------------------------------------
+      - name: Build artifacts
+        run: poetry build
+
+
       # #----------------------------------------------
       # #              run test suite
       # #----------------------------------------------
@@ -60,8 +69,3 @@ jobs:
       #     pytest tests/
       #     coverage report
 
-      #----------------------------------------------
-      #              build artifacts
-      #----------------------------------------------
-      - name: Build artifacts
-        run: poetry build
