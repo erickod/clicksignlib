@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 import clicksignlib
+from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import NotificationHandler
 from clicksignlib.utils.result import Result
@@ -17,7 +18,9 @@ def test_NotificationHandler_can_be_imported_from_handlers_package() -> None:
 
 
 def test_NotificationHandler_notify_by_email_returns_a_Result() -> None:
-    sut = NotificationHandler(access_token=access_token, environment=env)
+    sut = NotificationHandler(
+        access_token=access_token, environment=env, requests_adapter=AioHttpAdapter()
+    )
     assert (
         type(sut.notify_by_email(request_key=request_signature_key, message=message))
         is Result
