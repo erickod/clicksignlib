@@ -21,12 +21,16 @@ jobs:
       #  -----  install & configure poetry  -----
       #----------------------------------------------
       - name: Install Poetry
-        run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+        run: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
 
       #----------------------------------------------
       #       load cached venv if cache exists
       #----------------------------------------------
-      - name: Load Cached Venv
+      - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v2
         with:
@@ -36,15 +40,15 @@ jobs:
       #----------------------------------------------
       # install dependencies if cache does not exist
       #----------------------------------------------
-      - name: Install Dependencies
+      - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry shell && poetry install
+        run: poetry install --no-interaction --no-root
 
       #----------------------------------------------
-      # install dependencies if cache does not exist
+      # install your root project, if required
       #----------------------------------------------
-      - name: Build Artifacts
-        run: poetry build
+      - name: Install library
+        run: poetry install --no-interaction
 
       # #----------------------------------------------
       # #              run test suite
@@ -56,8 +60,8 @@ jobs:
       #     pytest tests/
       #     coverage report
 
-      # #----------------------------------------------
-      # #              build artifacts
-      # #----------------------------------------------
-      # - name: Build artifacts
-      #   run: poetry build
+      #----------------------------------------------
+      #              build artifacts
+      #----------------------------------------------
+      - name: Build artifacts
+        run: poetry build
