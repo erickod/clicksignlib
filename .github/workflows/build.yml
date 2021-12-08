@@ -53,9 +53,10 @@ jobs:
       #----------------------------------------------
       #              run test suite
       #----------------------------------------------
-      
+
       - name: Run tests
         run: |
           source .venv/bin/activate
+          pip install coverage
           pytest tests/
           coverage report
