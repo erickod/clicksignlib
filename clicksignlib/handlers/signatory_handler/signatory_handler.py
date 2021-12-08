@@ -41,6 +41,7 @@ class SignatoryHandler(EndpointMixin):
         phone_number: str = "",
         auths: Auth = Auth.EMAIL,
         notify: bool = True,
+        handwritten_enabled: bool = True,
     ) -> Any:
 
         if auths in (Auth.EMAIL, Auth.API) and not email:
@@ -56,14 +57,10 @@ class SignatoryHandler(EndpointMixin):
         request_payload = {
             "signer": {
                 "name": name,
-                # "email": email,
                 "phone_number": phone_number,
                 "auths": [auths.value],
-                # "documentation": cpf,
-                # "birthday": birthday,
-                # "has_documentation": True,
                 "selfie_enabled": False,
-                "handwritten_enabled": False,
+                "handwritten_enabled": handwritten_enabled,
                 "official_document_enabled": False,
                 "liveness_enabled": False,
                 "delivery": "email" if notify else None,
