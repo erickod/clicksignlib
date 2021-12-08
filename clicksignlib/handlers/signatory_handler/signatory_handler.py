@@ -11,12 +11,12 @@ from .signer_type import SignerType
 
 class SignatoryHandler(EndpointMixin):
     def __init__(
-        self,
-        *,
-        access_token: str,
-        environment: IEnvironment,
-        api_version: str = "/api/v1",
-        requests_adapter=requests,
+            self,
+            *,
+            access_token: str,
+            environment: IEnvironment,
+            api_version: str = "/api/v1",
+            requests_adapter=requests,
     ) -> None:
         self.config = Config(
             access_token=access_token,
@@ -33,14 +33,15 @@ class SignatoryHandler(EndpointMixin):
         return endpoint
 
     def create(
-        self,
-        *,
-        name: str,
-        cpf: str,
-        birthday: str,
-        email: str,
-        phone_number: str,
-        notify: bool = True,
+            self,
+            *,
+            name: str,
+            cpf: str,
+            birthday: str,
+            email: str,
+            phone_number: str,
+            notify: bool = True,
+            handwritten_enabled: bool = True,
     ) -> Any:
         request_payload = {
             "signer": {
@@ -52,7 +53,7 @@ class SignatoryHandler(EndpointMixin):
                 "birthday": birthday,
                 "has_documentation": True,
                 "selfie_enabled": False,
-                "handwritten_enabled": False,
+                "handwritten_enabled": handwritten_enabled,
                 "official_document_enabled": False,
                 "liveness_enabled": False,
                 "delivery": "email" if notify else None,
@@ -66,12 +67,12 @@ class SignatoryHandler(EndpointMixin):
         )
 
     def add_signatory_to_document(
-        self,
-        document_key: str,
-        signer_key: str,
-        signer_type: SignerType,
-        message: str,
-        group: int = 0,
+            self,
+            document_key: str,
+            signer_key: str,
+            signer_type: SignerType,
+            message: str,
+            group: int = 0,
     ) -> Any:
         endpoint: str = f"{self.config.environment.endpoint}/api/v1/lists?"
         endpoint = f"{endpoint}access_token={self.config.access_token}"
