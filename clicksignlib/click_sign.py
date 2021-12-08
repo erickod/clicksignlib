@@ -1,5 +1,4 @@
-import requests
-
+from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import (
     DocumentHandler,
@@ -12,11 +11,11 @@ from clicksignlib.handlers import (
 
 class ClickSign:
     def __init__(
-            self,
-            *,
-            access_token: str,
-            environment: IEnvironment,
-            requests_adapter=requests,
+        self,
+        *,
+        access_token: str,
+        environment: IEnvironment,
+        requests_adapter=AioHttpAdapter(),
     ) -> None:
         self._access_token = access_token
         self._environment = environment

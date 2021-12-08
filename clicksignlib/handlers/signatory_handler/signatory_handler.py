@@ -94,7 +94,7 @@ class SignatoryHandler(EndpointMixin):
         signer_type: SignerType,
         message: str,
         group: int = 0,
-    ) -> Any:
+    ) -> Result:
         endpoint: str = f"{self.config.environment.endpoint}/api/v1/lists?"
         endpoint = f"{endpoint}access_token={self.config.access_token}"
         request_payload = {
