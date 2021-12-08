@@ -1,4 +1,4 @@
-name: test
+name: Build and Upload Artifact
 
 on: 
   pull_request:
