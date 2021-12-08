@@ -3,6 +3,7 @@ from unittest.mock import Mock
 
 import clicksignlib
 import pytest
+from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.utils import Result
 from clicksignlib.utils.errors import InvalidKeyError
@@ -23,7 +24,10 @@ def test_DocumentHandler_can_be_imported_from_handlers_package() -> None:
 
 def test_ensure_DocumentHandler_intantiation_params() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert sut.config.access_token == access_token
     assert sut.config.environment == env
@@ -31,14 +35,20 @@ def test_ensure_DocumentHandler_intantiation_params() -> None:
 
 def test_DocumentHandler_base_endpoint_returns_the_env_endpoint() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     sut.base_endpoint == env.endpoint
 
 
 def test_DocumentHandler_full_endpoint_return() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     endpoint = f"{sut.base_endpoint}{sut.config.api_version}"
     endpoint = f"{endpoint}/documents?access_token={sut.config.access_token}"
@@ -47,7 +57,10 @@ def test_DocumentHandler_full_endpoint_return() -> None:
 
 def test_DocumentHandler_create_from_template() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     result = sut.create_from_template(
         document_type="Contratos",
@@ -61,7 +74,10 @@ def test_DocumentHandler_create_from_template() -> None:
 
 def test_DocumentHandler_raises_when_create_from_template_receives_an_invalid_key() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
 
     with pytest.raises(InvalidKeyError):
@@ -75,7 +91,10 @@ def test_DocumentHandler_raises_when_create_from_template_receives_an_invalid_ke
 
 def test_DocumentHandler_list_returns_a_Result():
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
 
     assert type(sut.list(page_number=1)) is Result
@@ -99,7 +118,10 @@ def test_DocumentHandler_list_calls_get_from_adapter_with_right_params(page_numb
 
 def test_DocumentHandler_detail_returns_a_Result():
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
 
     assert type(sut.detail(document_key=document_key)) is Result
@@ -107,14 +129,20 @@ def test_DocumentHandler_detail_returns_a_Result():
 
 def test_DocumentHandler_create_from_bytes_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert type(sut.create_from_bytes("test.docx", "test", data=b"any bytes")) is Result
 
 
 def test_finish_document_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert type(sut.finish(document_key=document_key)) is Result
 
@@ -135,7 +163,10 @@ def test_finish_document_calls_patch_from_request_adapter() -> None:
 
 def test_cancel_document_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert type(sut.cancel(document_key=document_key)) is Result
 
@@ -156,7 +187,10 @@ def test_cancel_document_calls_patch_from_request_adapter() -> None:
 
 def test_delete_document_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert type(sut.delete(document_key=document_key)) is Result
 
@@ -176,7 +210,10 @@ def test_delete_calls_patch_from_request_adapter() -> None:
 
 def test_sign_by_api_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert (
         type(sut.sign_by_api(request_signature_key=document_key, secret_hmac_sha256=""))
@@ -186,6 +223,9 @@ def test_sign_by_api_returns_a_Result() -> None:
 
 def test_configure_returns_a_Result() -> None:
     sut = clicksignlib.handlers.DocumentHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert type(sut.configure(document_key=document_key)) is Result
