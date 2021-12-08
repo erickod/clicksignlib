@@ -46,11 +46,22 @@ jobs:
       - name: Install library
         run: poetry install --no-interaction
       #----------------------------------------------
-      #              run test suite
+      #              run build
       #----------------------------------------------
 
       - name: Build
         run: poetry build
+
+      #----------------------------------------------
+      #              upload artifact
+      #----------------------------------------------
+
+      - uses: actions/upload-artifact@v2
+        name: Upload Artifact
+        with:
+          name: artifact
+          path: dist/ClickSignLib*
+
    
       #----------------------------------------------
       #              run test suite
