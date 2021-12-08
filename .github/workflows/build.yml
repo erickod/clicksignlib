@@ -49,6 +49,17 @@ jobs:
       #----------------------------------------------
       - name: Install library
         run: poetry install --no-interaction
+
+      #----------------------------------------------
+      #              run test suite
+      #----------------------------------------------
+
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          pip install coverage
+          coverage run -m pytest && coverage report
+
       #----------------------------------------------
       #              run build
       #----------------------------------------------
@@ -68,12 +79,4 @@ jobs:
           path: dist/ClickSignLib*
 
    
-      #----------------------------------------------
-      #              run test suite
-      #----------------------------------------------
 
-      # - name: Run tests
-      #   run: |
-      #     source .venv/bin/activate
-      #     pytest tests/
-      #     coverage report
