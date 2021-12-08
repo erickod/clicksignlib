@@ -1,5 +1,5 @@
 # ClickSignLib - An easy way to integrate the Click Sign with your python projects
-This provide integration to the Click Sign REST API on [Sanbox](https://sandbox.clicksign.com) and on [Production](https://app.clicksign.com) environments.
+This provide integration to the Click Sign REST API on [Sandbox](https://sandbox.clicksign.com) and on [Production](https://app.clicksign.com) environments.
 
 PS: The requests will perform asyncronoulsy and you'll get the resuls only when you call the run method.
 
