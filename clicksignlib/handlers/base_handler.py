@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-import requests
 from clicksignlib.environments.protocols import IEnvironment
 
 
@@ -10,8 +9,8 @@ class Config(ABC):
         *,
         access_token: str,
         environment: IEnvironment,
+        requests_adapter,
         api_version: str,
-        requests_adapter=requests,
     ) -> None:
         self.access_token = access_token
         self.environment = environment
