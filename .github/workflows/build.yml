@@ -76,7 +76,4 @@ jobs:
         name: Upload Artifact
         with:
           name: artifact
-          path: dist/ClickSignLib*
-
-   
-
+          path: dist/ClickSignLib*.whl
