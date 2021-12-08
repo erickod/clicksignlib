@@ -57,7 +57,7 @@ jobs:
       #----------------------------------------------
 
       - uses: actions/upload-artifact@v2
-        if: github.ref == 'refs/heads/master' && github.event == 'push'
+        if: github.ref == 'refs/heads/main' && github.event == 'push'
         name: Upload Artifact
         with:
           name: artifact
