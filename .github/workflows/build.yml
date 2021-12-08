@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  build_and_upload_artifact:
     runs-on: ubuntu-latest
     steps:
       #----------------------------------------------
