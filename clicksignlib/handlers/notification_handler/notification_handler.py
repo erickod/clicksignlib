@@ -1,4 +1,3 @@
-import requests
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
@@ -11,8 +10,8 @@ class NotificationHandler(EndpointMixin):
         *,
         access_token: str,
         environment: IEnvironment,
+        requests_adapter,
         api_version: str = "/api/v1",
-        requests_adapter=requests,
     ) -> None:
         self.config = Config(
             access_token=access_token,

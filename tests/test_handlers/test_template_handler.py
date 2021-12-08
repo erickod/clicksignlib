@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 import clicksignlib
+from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.utils.result import Result
 
@@ -16,7 +17,10 @@ def test_TemplateHandler_can_be_imported_from_handlers_package() -> None:
 def test_ensure_TemplateHandler_intantiation_params() -> None:
     env = clicksignlib.environments.SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     assert sut.config.access_token == access_token
     assert sut.config.environment == env
@@ -25,7 +29,10 @@ def test_ensure_TemplateHandler_intantiation_params() -> None:
 def test_TemplateHandler_base_endpoint_returns_the_env_endpoint() -> None:
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     sut.base_endpoint == env.endpoint
 
@@ -33,7 +40,10 @@ def test_TemplateHandler_base_endpoint_returns_the_env_endpoint() -> None:
 def test_TemplateHandler_full_endpoint_return() -> None:
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
-        access_token=access_token, environment=env, api_version=api_version
+        access_token=access_token,
+        environment=env,
+        api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     endpoint = f"{sut.base_endpoint}/{sut.config.api_version}"
     endpoint = f"{endpoint}/templates?access_token={sut.config.access_token}"
@@ -87,6 +97,7 @@ def test_TemplateHandler_create_from_bytes_calls_create() -> None:
         access_token=access_token,
         environment=SandboxEnvironment(),
         api_version=api_version,
+        requests_adapter=AioHttpAdapter(),
     )
     sut.create = Mock()
     sut.create_from_bytes("test.docx", b"any bytes")

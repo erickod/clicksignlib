@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 import clicksignlib
+from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import SignerType
 
@@ -15,7 +16,7 @@ def test_SignatoryHandler_can_be_imported_from_handlers_package() -> None:
 
 def test_SignatoryHandler_intantiation_params() -> None:
     sut = clicksignlib.handlers.SignatoryHandler(
-        access_token=access_token, environment=env
+        access_token=access_token, environment=env, requests_adapter=AioHttpAdapter()
     )
     assert sut.config.access_token == access_token
     assert sut.config.environment == env
