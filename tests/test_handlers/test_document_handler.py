@@ -1,5 +1,4 @@
 import uuid
-from unittest.mock import Mock
 
 import clicksignlib
 import pytest
@@ -101,8 +100,8 @@ def test_DocumentHandler_list_returns_a_Result():
 
 
 @pytest.mark.parametrize("page_number", [1, 10, 15, 150])
-def test_DocumentHandler_list_calls_get_from_adapter_with_right_params(page_number):
-    adapter = Mock()
+def test_DocumentHandler_list_calls_get_from_adapter_with_right_params(page_number, mock):
+    adapter = mock
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token,
         environment=env,
@@ -147,12 +146,12 @@ def test_finish_document_returns_a_Result() -> None:
     assert type(sut.finish(document_key=document_key)) is Result
 
 
-def test_finish_document_calls_patch_from_request_adapter() -> None:
+def test_finish_document_calls_patch_from_request_adapter(mock) -> None:
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token,
         environment=env,
         api_version=api_version,
-        requests_adapter=Mock(),
+        requests_adapter=mock,
     )
     sut.finish(document_key=document_key)
     sut.config.requests.patch.assert_called_with(
@@ -171,12 +170,12 @@ def test_cancel_document_returns_a_Result() -> None:
     assert type(sut.cancel(document_key=document_key)) is Result
 
 
-def test_cancel_document_calls_patch_from_request_adapter() -> None:
+def test_cancel_document_calls_patch_from_request_adapter(mock) -> None:
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token,
         environment=env,
         api_version=api_version,
-        requests_adapter=Mock(),
+        requests_adapter=mock,
     )
     sut.cancel(document_key=document_key)
     sut.config.requests.patch.assert_called_with(
@@ -195,12 +194,12 @@ def test_delete_document_returns_a_Result() -> None:
     assert type(sut.delete(document_key=document_key)) is Result
 
 
-def test_delete_calls_patch_from_request_adapter() -> None:
+def test_delete_calls_patch_from_request_adapter(mock) -> None:
     sut = clicksignlib.handlers.DocumentHandler(
         access_token=access_token,
         environment=env,
         api_version=api_version,
-        requests_adapter=Mock(),
+        requests_adapter=mock,
     )
     sut.delete(document_key=document_key)
     sut.config.requests.delete.assert_called_with(

@@ -1,5 +1,3 @@
-from unittest.mock import Mock
-
 import clicksignlib
 from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
@@ -27,17 +25,16 @@ def test_NotificationHandler_notify_by_email_returns_a_Result() -> None:
     )
 
 
-def test_NotificationHandler_notify_by_email_calls_post_from_request_with_right_param() -> None:
-    requests = Mock()
+def test_NotificationHandler_notify_by_email_calls_post_from_request_with_right_param(mock) -> None:
     sut = NotificationHandler(
-        access_token=access_token, environment=env, requests_adapter=requests
+        access_token=access_token, environment=env, requests_adapter=mock
     )
     sut.notify_by_email(
         request_key=request_signature_key,
         message=message,
         url=url,
     )
-    requests.post.assert_called_with(
+    mock.post.assert_called_with(
         url=sut.full_endpoint,
         json={
             "request_signature_key": request_signature_key,
@@ -47,10 +44,9 @@ def test_NotificationHandler_notify_by_email_calls_post_from_request_with_right_
     )
 
 
-def test_NotificationHandler_notify_by_email_Result_data() -> None:
-    requests = Mock()
+def test_NotificationHandler_notify_by_email_Result_data(mock) -> None:
     sut = NotificationHandler(
-        access_token=access_token, environment=env, requests_adapter=requests
+        access_token=access_token, environment=env, requests_adapter=mock
     )
     result = sut.notify_by_email(
         request_key=request_signature_key,
@@ -62,10 +58,9 @@ def test_NotificationHandler_notify_by_email_Result_data() -> None:
     assert result.response_data
 
 
-def test_ensure_notify_by_email_has_no_url_in_payload_when_it_doesnt_was_passed() -> None:
-    requests = Mock()
+def test_ensure_notify_by_email_has_no_url_in_payload_when_it_doesnt_was_passed(mock) -> None:
     sut = NotificationHandler(
-        access_token=access_token, environment=env, requests_adapter=requests
+        access_token=access_token, environment=env, requests_adapter=mock
     )
     result = sut.notify_by_email(
         request_key=request_signature_key,

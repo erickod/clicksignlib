@@ -1,5 +1,3 @@
-from unittest.mock import Mock
-
 import clicksignlib
 from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
@@ -50,55 +48,50 @@ def test_TemplateHandler_full_endpoint_return() -> None:
     sut.full_endpoint == endpoint
 
 
-def test_TemplateHandler_create_calls_post_from_request_adapter() -> None:
+def test_TemplateHandler_create_calls_post_from_request_adapter(mock) -> None:
     content = b""
-    request = Mock()
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token,
         environment=env,
         api_version=api_version,
-        requests_adapter=request,
+        requests_adapter=mock,
     )
     sut.create(name, content)
-    request.post.assert_called_once()
+    mock.post.assert_called_once()
 
 
-def test_TemplateHandler_create_return_type() -> None:
-    response = Mock()
-    template = Mock()
-    request = Mock()
+def test_TemplateHandler_create_return_type(mock) -> None:
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token,
         environment=env,
         api_version=api_version,
-        requests_adapter=request,
+        requests_adapter=mock,
     )
-    response = sut.create(name, template)
+    response = sut.create(name, mock)
     assert type(response) is Result
 
 
-def test_TemplateHandler_list_method_calls_adapter_get() -> None:
-    request = Mock()
+def test_TemplateHandler_list_method_calls_adapter_get(mock) -> None:
     env = SandboxEnvironment()
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token,
         environment=env,
         api_version=api_version,
-        requests_adapter=request,
+        requests_adapter=mock,
     )
     sut.list()
-    request.get.assert_called_with(sut.full_endpoint)
+    mock.get.assert_called_with(sut.full_endpoint)
 
 
-def test_TemplateHandler_create_from_bytes_calls_create() -> None:
+def test_TemplateHandler_create_from_bytes_calls_create(mock) -> None:
     sut = clicksignlib.handlers.TemplateHandler(
         access_token=access_token,
         environment=SandboxEnvironment(),
         api_version=api_version,
         requests_adapter=AioHttpAdapter(),
     )
-    sut.create = Mock()
+    sut.create = mock
     sut.create_from_bytes("test.docx", b"any bytes")
     sut.create.assert_called()
