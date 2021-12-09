@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
@@ -53,7 +53,7 @@ class SignatoryHandler(EndpointMixin):
                 "phone_number field is required if auths equal to SMS."
             )
 
-        request_payload = {
+        request_payload: Dict["str", Any] = {
             "signer": {
                 "name": name,
                 "phone_number": phone_number,
@@ -67,7 +67,6 @@ class SignatoryHandler(EndpointMixin):
         }
         if email:
             request_payload["signer"]["email"] = email
-            request_payload["signer"]["auths"].append("email")
 
         if birthday:
             request_payload["signer"]["birthday"] = birthday
@@ -93,7 +92,7 @@ class SignatoryHandler(EndpointMixin):
     ) -> Result:
         endpoint: str = f"{self.config.environment.endpoint}/api/v1/lists?"
         endpoint = f"{endpoint}access_token={self.config.access_token}"
-        request_payload = {
+        request_payload: Dict["str", Any] = {
             "list": {
                 "document_key": document_key,
                 "signer_key": signer_key,
@@ -108,5 +107,8 @@ class SignatoryHandler(EndpointMixin):
 
         return Result(
             request_data=request_payload,
-            response_data=self.config.requests.post(endpoint, json=request_payload),
+            response_data=self.config.requests.post(
+                endpoint,
+                json=request_payload,
+            ),
         )
