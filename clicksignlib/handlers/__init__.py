@@ -1,5 +1,5 @@
 from . import mixins
-from .base_handler import Config
+from .config import Config
 from .document_handler import DocumentHandler
 from .embedded_handler import EmbeddedHandler
 from .notification_handler import NotificationHandler
