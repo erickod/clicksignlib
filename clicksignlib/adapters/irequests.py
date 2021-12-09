@@ -1,18 +1,20 @@
-from typing import Any, Coroutine, Dict, Protocol
+from typing import Any, Coroutine, Dict
+
+from typing_extensions import Protocol
 
 
 class IRequest(Protocol):
-    def get(self, url: str) -> Coroutine:
+    async def get(self, url: str) -> Coroutine:
         pass
 
-    def post(self, url: str, json) -> Coroutine:
+    async def post(self, url: str, json) -> Coroutine:
         pass
 
-    def put(self, url: str, json) -> Coroutine:
+    async def put(self, url: str, json) -> Coroutine:
         pass
 
-    def delete(self, url: str) -> Coroutine:
+    async def delete(self, url: str) -> Coroutine:
         pass
 
-    def path(self, url: str, json) -> Coroutine:
+    async def path(self, url: str, json) -> Coroutine:
         pass
