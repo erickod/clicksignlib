@@ -1,6 +1,6 @@
 name: Build and Upload Artifact
 
-on: 
+on:
   pull_request:
     branches: [main]
   push:
