@@ -34,46 +34,70 @@ class SignatoryHandler(EndpointMixin):
         self,
         *,
         name: str,
-        cpf: str = "",
+        auths: Auth,
+        documentation: str = "",
         birthday: str = "",
         email: str = "",
         phone_number: str = "",
-        auths: Auth = Auth.EMAIL,
         notify: bool = True,
+        selfie_enabled: bool = False,
         handwritten_enabled: bool = True,
+        liveness_enabled: bool = False,
+        has_documentation: bool = False,
     ) -> Any:
 
-        if auths in (Auth.EMAIL, Auth.API) and not email:
-            raise RequiredParameters(
-                "email field is required if auths equal to EMAIL or API."
-            )
-
-        if auths in (Auth.WHATSAPP, Auth.SMS) and not phone_number:
-            raise RequiredParameters(
-                "phone_number field is required if auths equal to SMS."
-            )
+        validators = {
+            "auths": {
+                "email": {"required_params": ["email"]},
+                "api": {"required_params": ["email", "documentation", "birthday"]},
+                "sms": {"required_params": ["phone_number", "email"]},
+                "whatsapp": {"required_params": ["phone_number"]},
+                "pix": {"required_params": ["documentation"]},
+                "icpbrasil": {
+                    "required_params": [
+                        "selfie_enabled",
+                        "handwritten_enabled",
+                        "liveness_enabled",
+                    ]
+                },
+            },
+            "params": {
+                "documentation": {"required_params": ["has_documentation"]},
+                "birthday": {"required_params": ["has_documentation"]},
+                "has_documentation": {"required_params": ["documentation", "birthday"]},
+            },
+        }
 
         request_payload: Dict["str", Any] = {
             "signer": {
                 "name": name,
-                "phone_number": phone_number,
                 "auths": [auths.value],
-                "selfie_enabled": False,
-                "handwritten_enabled": handwritten_enabled,
                 "official_document_enabled": False,
-                "liveness_enabled": False,
-                "delivery": "email" if notify else None,
+                "email": email,
             }
         }
-        if email:
-            request_payload["signer"]["email"] = email
 
-        if birthday:
-            request_payload["signer"]["birthday"] = birthday
+        params = locals()
 
-        if cpf:
-            request_payload["signer"]["documentation"] = cpf
-            request_payload["signer"]["has_documentation"] = True
+        for key, value in validators["auths"].items():
+            required_params = value["required_params"]
+            if key == auths.value:
+                for param in required_params:
+                    request_payload["signer"][param] = params[param]
+                    if params[param]:
+                        continue
+                    raise RequiredParameters(
+                        f"To use {key.upper()} Auth set the {param} param."
+                    )
+
+        for key, value in validators["params"].items():
+            required_params = value["required_params"]
+            if params[key]:
+                for param in required_params:
+                    request_payload["signer"][param] = params[param]
+                    if params[param]:
+                        continue
+                    raise RequiredParameters(f"To use {key} set the {param} param.")
 
         return Result(
             request_data=request_payload,
