@@ -3,7 +3,7 @@ import pytest
 from clicksignlib.adapters import AioHttpAdapter
 from clicksignlib.environments import SandboxEnvironment
 from clicksignlib.handlers import Auth, SignerType
-from clicksignlib.utils.errors import RequiredParameters
+from clicksignlib.utils.errors import InvalidParameters, RequiredParameters
 
 env = SandboxEnvironment()
 access_token: str = "899ee68c-0a4a-48dc-9331-44844203b6b4"
@@ -74,6 +74,50 @@ def test_create_raises_when_auth_is_pix_and_no_email_is_passed(mock) -> None:
             documentation="111.111.111-41",
             has_documentation=True,
             birthday="1990-10-15",
+        )
+
+
+def test_create_raises_when_auth_is_ICP_BRASIL_and_no_email_is_passed(mock) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(RequiredParameters):
+        sut.create(
+            name="João Souza Silva",
+            auths=Auth.ICP_BRASIL,
+            documentation="111.111.111-41",
+            has_documentation=True,
+            birthday="1990-10-15",
+        )
+
+
+def test_create_raises_when_auth_is_ICP_BRASIL_when_liveness_enabled_is_true(
+    mock,
+) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(InvalidParameters):
+        sut.create(
+            name="João Souza Silva",
+            email="mail@mail.com",
+            auths=Auth.ICP_BRASIL,
+            liveness_enabled=True,
+        )
+
+
+def test_create_raises_when_auth_is_ICP_BRASIL_when_selfie_enabled_is_true(
+    mock,
+) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(InvalidParameters):
+        sut.create(
+            name="João Souza Silva",
+            email="mail@mail.com",
+            auths=Auth.ICP_BRASIL,
+            selfie_enabled=True,
         )
 
 
@@ -159,18 +203,18 @@ def test_create_raises_when_auth_is_pix_and_no_documentation_is_passed(mock) -> 
         )
 
 
-def test_create_raises_when_auth_icp_brasil_and_self_enabled_is_false(mock) -> None:
+def test_create_raises_when_auth_icp_brasil_and_self_enabled_is_true(mock) -> None:
     sut = clicksignlib.handlers.SignatoryHandler(
         access_token=access_token, environment=env, requests_adapter=mock
     )
-    with pytest.raises(RequiredParameters):
+    with pytest.raises(InvalidParameters):
         sut.create(
             name="João Souza Silva",
             auths=Auth.ICP_BRASIL,
             email="mail@mail.com",
             birthday="1990-10-15",
             phone_number="6198464580",
-            selfie_enabled=False,
+            selfie_enabled=True,
         )
 
 
@@ -180,25 +224,7 @@ def test_create_raises_when_auth_icp_brasil_and_handwritten_enabled_is_false(
     sut = clicksignlib.handlers.SignatoryHandler(
         access_token=access_token, environment=env, requests_adapter=mock
     )
-    with pytest.raises(RequiredParameters):
-        sut.create(
-            name="João Souza Silva",
-            auths=Auth.ICP_BRASIL,
-            email="mail@mail.com",
-            birthday="1990-10-15",
-            phone_number="6198464580",
-            selfie_enabled=True,
-            handwritten_enabled=False,
-        )
-
-
-def test_create_raises_when_auth_icp_brasil_and_liveness_enabled_is_false(
-    mock,
-) -> None:
-    sut = clicksignlib.handlers.SignatoryHandler(
-        access_token=access_token, environment=env, requests_adapter=mock
-    )
-    with pytest.raises(RequiredParameters):
+    with pytest.raises(InvalidParameters):
         sut.create(
             name="João Souza Silva",
             auths=Auth.ICP_BRASIL,
@@ -207,7 +233,25 @@ def test_create_raises_when_auth_icp_brasil_and_liveness_enabled_is_false(
             phone_number="6198464580",
             selfie_enabled=True,
             handwritten_enabled=True,
-            liveness_enabled=False,
+        )
+
+
+def test_create_raises_when_auth_icp_brasil_and_liveness_enabled_is_True(
+    mock,
+) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(InvalidParameters):
+        sut.create(
+            name="João Souza Silva",
+            auths=Auth.ICP_BRASIL,
+            email="mail@mail.com",
+            birthday="1990-10-15",
+            phone_number="6198464580",
+            selfie_enabled=True,
+            handwritten_enabled=True,
+            liveness_enabled=True,
         )
 
 

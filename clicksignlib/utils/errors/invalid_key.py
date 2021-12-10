@@ -9,3 +9,7 @@ class InvalidKeyError(Exception):
 
 class RequiredParameters(Exception):
     pass
+
+
+class InvalidParameters(Exception):
+    pass

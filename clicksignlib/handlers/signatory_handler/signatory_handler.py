@@ -4,7 +4,7 @@ from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Result
-from clicksignlib.utils.errors import RequiredParameters
+from clicksignlib.utils.errors import InvalidParameters, RequiredParameters
 
 from .signer_type import Auth, SignerType
 
@@ -44,47 +44,66 @@ class SignatoryHandler(EndpointMixin):
         handwritten_enabled: bool = True,
         liveness_enabled: bool = False,
         has_documentation: bool = False,
+        official_document_enabled: bool = False,
     ) -> Any:
 
         validation_rules = {
             "auths": {
-                "email": {"required_params": ["email"]},
+                "email": {
+                    "required_params": ["email"],
+                    "rejected_params": [],
+                },
                 "api": {
                     "required_params": [
                         "email",
                         "documentation",
                         "birthday",
-                    ]
+                    ],
+                    "rejected_params": [],
                 },
                 "sms": {
                     "required_params": [
                         "phone_number",
                         "email",
-                    ]
+                    ],
+                    "rejected_params": [],
                 },
-                "whatsapp": {"required_params": ["phone_number"]},
+                "whatsapp": {
+                    "required_params": ["phone_number"],
+                    "rejected_params": [],
+                },
                 "pix": {
                     "required_params": [
                         "documentation",
+                        "has_documentation",
                         "email",
-                    ]
+                    ],
+                    "rejected_params": [],
                 },
-                "icpbrasil": {
-                    "required_params": [
+                "icp_brasil": {
+                    "required_params": ["email", "has_documentation"],
+                    "rejected_params": [
                         "selfie_enabled",
-                        "handwritten_enabled",
                         "liveness_enabled",
-                    ]
+                        "official_document_enabled",
+                    ],
                 },
             },
             "params": {
-                "documentation": {"required_params": ["has_documentation"]},
-                "birthday": {"required_params": ["has_documentation"]},
+                "documentation": {
+                    "required_params": ["has_documentation"],
+                    "rejected_params": [],
+                },
+                "birthday": {
+                    "required_params": ["has_documentation"],
+                    "rejected_params": [],
+                },
                 "has_documentation": {
                     "required_params": [
                         "documentation",
                         "birthday",
-                    ]
+                    ],
+                    "rejected_params": [],
                 },
             },
         }
@@ -93,8 +112,10 @@ class SignatoryHandler(EndpointMixin):
             "signer": {
                 "name": name,
                 "auths": [auths.value],
-                "official_document_enabled": False,
+                "official_document_enabled": official_document_enabled,
                 "email": email,
+                "selfie_enabled": selfie_enabled,
+                "liveness_enabled": liveness_enabled,
             }
         }
 
@@ -102,6 +123,15 @@ class SignatoryHandler(EndpointMixin):
 
         for key, value in validation_rules["auths"].items():
             required_params = value["required_params"]
+            rejected_params = value["rejected_params"]
+
+            for param in rejected_params:
+                del request_payload["signer"][param]
+                if params[param]:
+                    raise InvalidParameters(
+                        f"To use {key.upper()} Auth remove the {param} param."
+                    )
+
             if key == auths.value:
                 for param in required_params:
                     request_payload["signer"][param] = params[param]
@@ -113,12 +143,18 @@ class SignatoryHandler(EndpointMixin):
 
         for key, value in validation_rules["params"].items():
             required_params = value["required_params"]
+            rejected_params = value["rejected_params"]
+
+            for param in rejected_params:
+                del request_payload["signer"][param]
+                if params[param]:
+                    raise InvalidParameters(f"To use {key} remove the {param} param.")
+
             if params[key]:
                 for param in required_params:
                     request_payload["signer"][param] = params[param]
-                    if params[param]:
-                        continue
-                    raise RequiredParameters(f"To use {key} set the {param} param.")
+                    if not params[param]:
+                        raise RequiredParameters(f"To use {key} set the {param} param.")
 
         return Result(
             request_data=request_payload,
