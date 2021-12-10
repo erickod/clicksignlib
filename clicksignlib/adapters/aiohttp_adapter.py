@@ -18,23 +18,31 @@ class AioHttpAdapter:
         return data
 
     async def __request(
-        self, session: aiohttp.ClientSession, method: str, url: str, json
+        self, session: aiohttp.ClientSession, method: str, url: str, json, files=None
     ) -> aiohttp.ClientResponse:
-        async with session.request(method, url, json=json) as response:
+
+        if files:
+            async with session.request(
+                method, url, data=dict(**files, **json)
+            ) as response:
+                await response.read()
+                return await self._make_async(response)
+
+        async with session.request(method, url, data=files) as response:
             await response.read()
             return await self._make_async(response)
 
     async def _request(
-        self, method: str, url: str, json=None
+        self, method: str, url: str, json=None, files=None
     ) -> aiohttp.ClientResponse:
         async with aiohttp.ClientSession() as session:
-            return await self.__request(session, method, url, json)
+            return await self.__request(session, method, url, json, files=files)
 
     def get(self, url: str) -> Coroutine:
         return self._request("GET", url)
 
-    def post(self, url: str, json) -> Coroutine:
-        return self._request("POST", url, json)
+    def post(self, url: str, json, files=None) -> Coroutine:
+        return self._request("POST", url, json, files=files)
 
     def put(self, url: str, json) -> Coroutine:
         return self._request("PUT", url, json)
