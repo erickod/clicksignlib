@@ -22,9 +22,8 @@ class HttpxAdapter:
             return await self._make_async(await client.get(url=url))
 
     async def post(self, url: str, json, files=None) -> Coroutine:
-        if files:
-            # files["template[name]"] = files["template[content]"]
-            async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient() as client:
+            if files:
                 return await self._make_async(
                     await client.post(
                         url=url,
@@ -32,8 +31,6 @@ class HttpxAdapter:
                         files=files,
                     )
                 )
-
-        async with httpx.AsyncClient() as client:
             return await self._make_async(
                 await client.post(url=url, json=json, files=files)
             )
