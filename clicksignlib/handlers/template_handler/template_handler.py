@@ -43,7 +43,7 @@ class TemplateHandler(EndpointMixin):
             response_data=self.config.requests.post(
                 url=self.full_endpoint,
                 files=request_payload["files"],
-                data=request_payload["data"],
+                json=request_payload["data"],
             ),
         )
 
