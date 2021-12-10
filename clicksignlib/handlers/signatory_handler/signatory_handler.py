@@ -59,7 +59,10 @@ class SignatoryHandler(EndpointMixin):
                         "documentation",
                         "birthday",
                     ],
-                    "rejected_params": [],
+                    "rejected_params": [
+                        "selfie_enabled",
+                        "liveness_enabled",
+                    ],
                 },
                 "sms": {
                     "required_params": [
@@ -125,14 +128,14 @@ class SignatoryHandler(EndpointMixin):
             required_params = value["required_params"]
             rejected_params = value["rejected_params"]
 
-            for param in rejected_params:
-                del request_payload["signer"][param]
-                if params[param]:
-                    raise InvalidParameters(
-                        f"To use {key.upper()} Auth remove the {param} param."
-                    )
-
             if key == auths.value:
+                for param in rejected_params:
+                    del request_payload["signer"][param]
+                    if params[param]:
+                        raise InvalidParameters(
+                            f"To use {key.upper()} Auth remove the {param} param."
+                        )
+
                 for param in required_params:
                     request_payload["signer"][param] = params[param]
                     if params[param]:

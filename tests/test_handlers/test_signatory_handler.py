@@ -285,7 +285,6 @@ def test_create_raises_when_auth_api_and_no_documentation_is_given_and_has_docum
             email="mail@mail.com",
             birthday="1990-10-15",
             phone_number="6198464580",
-            selfie_enabled=True,
             handwritten_enabled=True,
             liveness_enabled=False,
             has_documentation=True,
@@ -305,9 +304,46 @@ def test_create_raises_when_auth_api_and_no_birthday_is_given_and_has_documentat
             documentation="111.111.111-41",
             email="mail@mail.com",
             phone_number="6198464580",
-            selfie_enabled=True,
             handwritten_enabled=True,
             liveness_enabled=False,
+            has_documentation=True,
+        )
+
+
+def test_create_raises_when_auth_is_api_and_liveness_enabled_is_True(
+    mock,
+) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(InvalidParameters):
+        sut.create(
+            name="João Souza Silva",
+            auths=Auth.API,
+            documentation="111.111.111-41",
+            email="mail@mail.com",
+            phone_number="6198464580",
+            handwritten_enabled=True,
+            liveness_enabled=True,
+            has_documentation=True,
+        )
+
+
+def test_create_raises_when_auth_is_api_and_liveness_enabled_is_True(
+    mock,
+) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(InvalidParameters):
+        sut.create(
+            name="João Souza Silva",
+            auths=Auth.API,
+            documentation="111.111.111-41",
+            email="mail@mail.com",
+            phone_number="6198464580",
+            selfie_enabled=True,
+            handwritten_enabled=True,
             has_documentation=True,
         )
 
@@ -325,7 +361,6 @@ def test_create_raises_when_a_documentation_is_given_and_has_documentation_is_Fa
             documentation="111.111.111-41",
             email="mail@mail.com",
             phone_number="6198464580",
-            selfie_enabled=True,
             handwritten_enabled=True,
             liveness_enabled=False,
             has_documentation=False,
@@ -345,7 +380,6 @@ def test_create_raises_when_a_birthday_is_given_and_has_documentation_is_False(
             birthday="1990-10-15",
             email="mail@mail.com",
             phone_number="6198464580",
-            selfie_enabled=True,
             handwritten_enabled=True,
             liveness_enabled=False,
             has_documentation=False,
