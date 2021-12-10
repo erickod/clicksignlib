@@ -46,13 +46,29 @@ class SignatoryHandler(EndpointMixin):
         has_documentation: bool = False,
     ) -> Any:
 
-        validators = {
+        validation_rules = {
             "auths": {
                 "email": {"required_params": ["email"]},
-                "api": {"required_params": ["email", "documentation", "birthday"]},
-                "sms": {"required_params": ["phone_number", "email"]},
+                "api": {
+                    "required_params": [
+                        "email",
+                        "documentation",
+                        "birthday",
+                    ]
+                },
+                "sms": {
+                    "required_params": [
+                        "phone_number",
+                        "email",
+                    ]
+                },
                 "whatsapp": {"required_params": ["phone_number"]},
-                "pix": {"required_params": ["documentation", "email"]},
+                "pix": {
+                    "required_params": [
+                        "documentation",
+                        "email",
+                    ]
+                },
                 "icpbrasil": {
                     "required_params": [
                         "selfie_enabled",
@@ -64,7 +80,12 @@ class SignatoryHandler(EndpointMixin):
             "params": {
                 "documentation": {"required_params": ["has_documentation"]},
                 "birthday": {"required_params": ["has_documentation"]},
-                "has_documentation": {"required_params": ["documentation", "birthday"]},
+                "has_documentation": {
+                    "required_params": [
+                        "documentation",
+                        "birthday",
+                    ]
+                },
             },
         }
 
@@ -79,7 +100,7 @@ class SignatoryHandler(EndpointMixin):
 
         params = locals()
 
-        for key, value in validators["auths"].items():
+        for key, value in validation_rules["auths"].items():
             required_params = value["required_params"]
             if key == auths.value:
                 for param in required_params:
@@ -90,7 +111,7 @@ class SignatoryHandler(EndpointMixin):
                         f"To use {key.upper()} Auth set the {param} param."
                     )
 
-        for key, value in validators["params"].items():
+        for key, value in validation_rules["params"].items():
             required_params = value["required_params"]
             if params[key]:
                 for param in required_params:
