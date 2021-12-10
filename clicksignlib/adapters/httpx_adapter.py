@@ -29,7 +29,7 @@ class HttpxAdapter:
                     await client.post(
                         url=url,
                         data=json,
-                        files=dict(**files),
+                        files=files,
                     )
                 )
 
