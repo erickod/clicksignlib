@@ -52,7 +52,7 @@ class SignatoryHandler(EndpointMixin):
                 "api": {"required_params": ["email", "documentation", "birthday"]},
                 "sms": {"required_params": ["phone_number", "email"]},
                 "whatsapp": {"required_params": ["phone_number"]},
-                "pix": {"required_params": ["documentation"]},
+                "pix": {"required_params": ["documentation", "email"]},
                 "icpbrasil": {
                     "required_params": [
                         "selfie_enabled",

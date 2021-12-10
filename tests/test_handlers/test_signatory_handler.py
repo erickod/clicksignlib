@@ -63,6 +63,20 @@ def test_create_raises_when_auth_is_api_and_no_email_is_passed(mock) -> None:
         )
 
 
+def test_create_raises_when_auth_is_pix_and_no_email_is_passed(mock) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(RequiredParameters):
+        sut.create(
+            name="João Souza Silva",
+            auths=Auth.PIX,
+            documentation="111.111.111-41",
+            has_documentation=True,
+            birthday="1990-10-15",
+        )
+
+
 def test_create_raises_when_auth_is_api_and_no_documentation_is_passed(mock) -> None:
     sut = clicksignlib.handlers.SignatoryHandler(
         access_token=access_token, environment=env, requests_adapter=mock
