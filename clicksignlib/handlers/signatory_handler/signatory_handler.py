@@ -69,7 +69,7 @@ class SignatoryHandler(EndpointMixin):
                     "rejected_params": [],
                 },
                 "whatsapp": {
-                    "required_params": ["phone_number"],
+                    "required_params": ["phone_number", "email"],
                     "rejected_params": [],
                 },
                 "pix": {

@@ -189,6 +189,23 @@ def test_create_raises_when_auth_is_whatsapp_and_no_phone_number_is_passed(
         )
 
 
+def test_create_raises_when_auth_is_whatsapp_and_no_email_is_passed(
+    mock,
+) -> None:
+    sut = clicksignlib.handlers.SignatoryHandler(
+        access_token=access_token, environment=env, requests_adapter=mock
+    )
+    with pytest.raises(RequiredParameters):
+        sut.create(
+            name="João Souza Silva",
+            documentation="111.111.111-41",
+            auths=Auth.WHATSAPP,
+            birthday="1990-10-15",
+            has_documentation=True,
+            phone_number="61984684580",
+        )
+
+
 def test_create_raises_when_auth_is_pix_and_no_documentation_is_passed(mock) -> None:
     sut = clicksignlib.handlers.SignatoryHandler(
         access_token=access_token, environment=env, requests_adapter=mock
