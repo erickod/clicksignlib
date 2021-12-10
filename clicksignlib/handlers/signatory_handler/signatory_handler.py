@@ -196,3 +196,8 @@ class SignatoryHandler(EndpointMixin):
                 json=request_payload,
             ),
         )
+
+    def detail(self, signer_key: str) -> Result:
+        endpoint = self.full_endpoint.replace("?", f"/{signer_key}?")
+        res = self.config.requests.get(endpoint)
+        return Result(request_data={}, response_data=res)
