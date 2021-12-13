@@ -6,7 +6,8 @@ from clicksignlib.handlers.mixins import EndpointMixin
 from clicksignlib.utils import Result
 from clicksignlib.utils.errors import InvalidParameters, RequiredParameters
 
-from .signer_type import Auth, SignerType
+from .auths_type import Auth
+from .signer_type import SignerType
 
 
 class SignatoryHandler(EndpointMixin):
