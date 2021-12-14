@@ -32,7 +32,10 @@ async def wait_future(result: Result, raises: bool = False) -> Dict[str, Any]:
         ]
         and raises
     ):
-        raise ApiError(coro.status_code, getattr(response, "errors", []))
+        try:
+            raise ApiError(coro.status_code, response["errors"])
+        except KeyError:
+            raise ApiError(coro.status_code, "No errors message")
     return response
 
 
