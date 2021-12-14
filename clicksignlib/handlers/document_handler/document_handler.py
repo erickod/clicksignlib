@@ -1,5 +1,3 @@
-import hashlib
-import hmac
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
@@ -7,7 +5,7 @@ from typing import Any, Dict, Optional, Union
 from clicksignlib.environments.protocols import IEnvironment
 from clicksignlib.handlers import Config
 from clicksignlib.handlers.mixins import EndpointMixin
-from clicksignlib.utils import Result, bytes_to_base64
+from clicksignlib.utils import Result, bytes_to_base64, calc_hmac_sum
 from clicksignlib.utils.validators import UUIDValidator
 
 
@@ -176,8 +174,4 @@ class DocumentHandler(EndpointMixin):
     def _calc_hmac_sum(
         self, request_signature_key: str, secret_hmac_sha256: str
     ) -> str:
-        return hmac.new(
-            secret_hmac_sha256.encode(),
-            msg=request_signature_key.encode(),
-            digestmod=hashlib.sha256,
-        ).hexdigest()
+        return calc_hmac_sum(request_signature_key, secret_hmac_sha256)
