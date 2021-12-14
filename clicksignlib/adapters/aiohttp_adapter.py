@@ -28,7 +28,7 @@ class AioHttpAdapter:
                 await response.read()
                 return await self._make_async(response)
 
-        async with session.request(method, url, data=files) as response:
+        async with session.request(method, url, json=json) as response:
             await response.read()
             return await self._make_async(response)
 
