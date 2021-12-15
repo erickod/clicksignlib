@@ -42,9 +42,12 @@ async def wait_future(result: Result, raises: bool = False) -> Dict[str, Any]:
 def run(
     *results: Result, raises: bool = True
 ) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
-    loop = asyncio.get_event_loop()
+
     coro = wait_futures(*results, raises=raises)
     if VERSION >= 3.7:
         return asyncio.run(coro)
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
     return loop.run_until_complete(coro)
