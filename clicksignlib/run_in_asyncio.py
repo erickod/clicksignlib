@@ -43,10 +43,8 @@ def run(
     *results: Result, raises: bool = True
 ) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
     if VERSION >= 3.7:
-        return asyncio.run(coro)
-
+        return asyncio.run(wait_futures(*results, raises=raises))
+    coro = wait_futures(*results, raises=raises)
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    coro = wait_futures(*results, raises=raises)
-
     return loop.run_until_complete(coro)
