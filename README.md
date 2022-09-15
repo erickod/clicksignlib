@@ -6,7 +6,7 @@ PS: The requests will perform asyncronoulsy and you'll get the resuls only when 
 # How to use it?
 
 - Import the ClickSign:  ```from clicksignlib import ClickSign, run```
-- Import the environments:  ```from clicksignlib.environments import SandboxEnvironment, ProductionEnvrionment```
+- Import the environments:  ```from clicksignlib.environments import SandboxEnvironment, ProductionEnvironment```
 - Create your ClickSign instance:  ```click_sign = ClickSign(access_token=<your access token>, environment=SandboxEnvironment())```
 
 ### Executing the requests
