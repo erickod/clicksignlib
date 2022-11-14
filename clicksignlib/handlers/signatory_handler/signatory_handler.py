@@ -47,7 +47,7 @@ class SignatoryHandler(EndpointMixin):
         has_documentation: bool = False,
         official_document_enabled: bool = False,
     ) -> Any:
-
+        #TODO: refactor validation_rules to a CoR
         validation_rules = {
             "auths": {
                 "email": {
@@ -120,8 +120,17 @@ class SignatoryHandler(EndpointMixin):
                 "email": email,
                 "selfie_enabled": selfie_enabled,
                 "liveness_enabled": liveness_enabled,
+                "has_documentation": bool(has_documentation)
             }
         }
+        if has_documentation:
+            request_payload["has_documentation"] = True
+        if auths == Auth.EMAIL:
+            validation_rules["params"]["has_documentation"]["required_params"] = []
+            if birthday:
+                validation_rules["params"]["has_documentation"]["required_params"].append("birthday")
+            if documentation:
+                validation_rules["params"]["has_documentation"]["required_params"].append("documentation")
 
         params = locals()
 
