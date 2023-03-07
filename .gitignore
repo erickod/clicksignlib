@@ -5,3 +5,6 @@ __pycache__/
 **/__pycache__/**
 .idea/
 dist/
+gohorse.py
+pyproject.toml.gui
+poetry.lock
