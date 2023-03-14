@@ -6,6 +6,7 @@ from clicksignlib.handlers import (
     NotificationHandler,
     SignatoryHandler,
     TemplateHandler,
+    BatchHandler,
 )
 
 
@@ -45,3 +46,7 @@ class ClickSign:
     @property
     def widget(self) -> EmbeddedHandler:
         return EmbeddedHandler(environment=self._config["environment"])
+    
+    @property
+    def batch(self) -> BatchHandler:
+        return BatchHandler(**self._config)

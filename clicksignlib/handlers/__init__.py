@@ -5,6 +5,7 @@ from .embedded_handler import EmbeddedHandler
 from .notification_handler import NotificationHandler
 from .signatory_handler import Auth, SignatoryHandler, SignerType
 from .template_handler import TemplateHandler
+from .batch_handler import BatchHandler
 
 __all__ = [
     "mixins",
@@ -16,4 +17,5 @@ __all__ = [
     "Auth",
     "SignerType",
     "TemplateHandler",
+    "BatchHandler"
 ]
